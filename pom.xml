@@ -21,7 +21,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sakura</groupId>
-    <artifactId>boot-parent</artifactId>
+    <artifactId>sakura-boot</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
