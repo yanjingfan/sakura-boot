@@ -29,7 +29,7 @@
 
 ```xml
 <parent>
-    <artifactId>boot-parent</artifactId>
+    <artifactId>sakura-boot</artifactId>
     <groupId>com.sakura</groupId>
     <version>1.0-SNAPSHOT</version>
 </parent>
