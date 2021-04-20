@@ -2,22 +2,22 @@
 
 ## 技术清单	
 
-| 技术         | 版本          | 说明                             |
-| ------------ | ------------- | -------------------------------- |
-| Spring Cloud | Greenwich.SR6 | 快速构建分布式系统的框架         |
-| Spring Boot  | 2.1.9         | 容器+MVC框架                     |
-| MybatisPlus  | 3.3.2         | ORM框架                          |
-| Swagger-UI   | 3.0.0         | 文档生产工具                     |
-| knife4j      | 3.0.0         | 基于swagger更美观好用的文档UI    |
-| RabbitMq     | 3.7.14        | 消息队列                         |
-| Redis        | 6.0           | 分布式缓存                       |
-| MySQL        | 8.0           | 关系型数据库                     |
-| easypoi      | 4.2.0         | 文档解析工具                     |
-| Druid        | 1.2.4         | 数据库连接池                     |
-| Lombok       | 1.18.6        | 简化对象封装工具                 |
-| fastdfs      | 1.26.2        | 分布式文件系统                   |
-| flyway       |               | 数据库版本管理工具（待集成开发） |
-| hutool       | 5.5.7         | 常用工具类                       |
+| 技术         | 版本          | 说明                          |
+| ------------ | ------------- | ----------------------------- |
+| Spring Cloud | Greenwich.SR6 | 快速构建分布式系统的框架      |
+| Spring Boot  | 2.1.9         | 容器+MVC框架                  |
+| MybatisPlus  | 3.3.2         | ORM框架                       |
+| Swagger-UI   | 3.0.0         | 文档生产工具                  |
+| knife4j      | 3.0.0         | 基于swagger更美观好用的文档UI |
+| RabbitMq     | 3.7.14        | 消息队列                      |
+| Redis        | 6.0           | 分布式缓存                    |
+| MySQL        | 8.0           | 关系型数据库                  |
+| easypoi      | 4.2.0         | 文档解析工具                  |
+| Druid        | 1.2.4         | 数据库连接池                  |
+| Lombok       | 1.18.6        | 简化对象封装工具              |
+| fastdfs      | 1.26.2        | 分布式文件系统                |
+| flyway       | 5.2.4         | 数据库版本管理工具            |
+| hutool       | 5.5.7         | 常用工具类                    |
 
 ## 脚手架依赖说明
 
@@ -630,17 +630,78 @@ event.publish(destination, defaultEvent);
 
 ### sakura-flyway
 
-> sql版本管理
+> 初始化数据库，支持数据库脚本的版本管理
 
-加入依赖
+`flyway`操作数据库，因此需要引入数据库驱动以及数据源依赖，所以配合`sakura-db`模块一起使用即可
 
-```xml
-<parent>
-    <groupId>com.sakura</groupId>
-    <artifactId>sakura-flyway</artifactId>
-    <version>1.0</version>
-</parent>
-```
+1. 加入依赖
+
+   + Flyway 依赖
+
+     ```xml
+     <parent>
+         <groupId>com.sakura</groupId>
+         <artifactId>sakura-flyway</artifactId>
+         <version>1.0</version>
+     </parent>
+     ```
+
+   + 初始化表结构，需要操作数据库，因此引入数据库驱动以及数据源依赖
+
+     如果项目中不使用`sakura-db`模块，则需要引入相关依赖（这里用 spring-boot-starter-data-jdbc）
+
+     ```xml
+     <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-data-jdbc</artifactId>
+     </dependency>
+     
+     <dependency>
+       <groupId>mysql</groupId>
+       <artifactId>mysql-connector-java</artifactId>
+       <scope>runtime</scope>
+     </dependency>
+     ```
+
+2. Flyway 知识补充
+
+   + Flyway 默认会去读取 `classpath:db/migration`，可以通过 `spring.flyway.locations` 去指定自定义路径，多个路径使用半角英文逗号分隔，内部资源使用 `classpath:`，外部资源使用 `file:`
+
+   + 如果项目初期没有数据库文件，但是又引用了 Flyway，那么在项目启动的时候，Flyway 会去检查是否存在 SQL 文件，此时你需要将这个检查关闭，`spring.flyway.check-location = false`
+
+   + Flyway 会在项目初次启动的时候创建一张名为 `flyway_schema_history` 的表，在这张表里记录数据库脚本执行的历史记录，当然，你可以通过 `spring.flyway.table` 去修改这个值
+
+   + Flyway 执行的 SQL 脚本必须遵循一种命名规则，`V<VERSION>__<NAME>.sql` 首先是 `V` ，然后是版本号，如果版本号有多个数字，使用`_`分隔，比如`1_0`、`1_1`，版本号的后面是 2 个下划线，最后是 SQL 脚本的名称。
+
+     **这里需要注意：V 开头的只会执行一次，下次项目启动不会执行，也不可以修改原始文件，否则项目启动会报错，如果需要对 V 开头的脚本做修改，需要清空`flyway_schema_history`表，如果有个 SQL 脚本需要在每次启动的时候都执行，那么将 V 改为 `R` 开头即可**
+
+   + Flyway 默认情况下会去清空原始库，再重新执行 SQL 脚本，这在生产环境下是不可取的，因此需要将这个配置关闭，`spring.flyway.clean-disabled = true`
+
+3. 使用：参考[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo)工程
+
+   + yml配置
+
+     ```yaml
+     spring:
+       flyway:
+         enabled: true
+         # 迁移前校验 SQL 文件是否存在问题
+         validate-on-migrate: true
+         # 生产环境一定要关闭
+         clean-disabled: true
+         # 校验路径下是否存在 SQL 文件
+         check-location: false
+         # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true
+         baseline-on-migrate: true
+         # 基础版本 0
+         baseline-version: 0
+     ```
+
+   + 初始化数据库脚本
+
+     [V1__Init.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/resources/db/migration/V1__Init.sql)
+
+     
 
 ### sakura-file-util
 
