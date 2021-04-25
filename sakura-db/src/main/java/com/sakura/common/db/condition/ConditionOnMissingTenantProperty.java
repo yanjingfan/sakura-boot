@@ -1,4 +1,4 @@
-package com.sakura.db.condition;
+package com.sakura.common.db.condition;
 
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;

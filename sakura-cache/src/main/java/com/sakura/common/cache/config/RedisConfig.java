@@ -1,4 +1,4 @@
-package com.sakura.cache.service.config;
+package com.sakura.common.cache.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

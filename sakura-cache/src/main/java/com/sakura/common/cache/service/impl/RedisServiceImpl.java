@@ -1,6 +1,6 @@
-package com.sakura.cache.service.impl;
+package com.sakura.common.cache.service.impl;
 
-import com.sakura.cache.service.RedisService;
+import com.sakura.common.cache.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

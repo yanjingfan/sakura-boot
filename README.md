@@ -109,7 +109,7 @@
 
 3. 统一返回结构
 
-   将MP查询到的分页信息转换使用`com.sakura.db.mp.CommonPage`类的`restPage`方法
+   将MP查询到的分页信息转换使用`CommonPage`类的`restPage`方法
 
    返回给前端结果封装使用`com.sakura.common.result.CommonResult`类，
 

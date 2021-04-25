@@ -1,4 +1,4 @@
-package com.sakura.cache.service;
+package com.sakura.common.cache.service;
 
 import java.util.List;
 import java.util.Map;

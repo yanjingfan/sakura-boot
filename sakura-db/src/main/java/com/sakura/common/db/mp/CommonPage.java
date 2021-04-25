@@ -1,4 +1,4 @@
-package com.sakura.db.mp;
+package com.sakura.common.db.mp;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
