@@ -69,7 +69,8 @@
           max-wait: -1ms        # 连接池最大阻塞等待时间（使用负值表示没有限制）
   ```
 
-+ 使用示例代码：[RedisController](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/java/com/sakura/cloud/demo1/controller/RedisController.java)
++ redis操作实现类：[RedisServiceImpl](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-cache/src/main/java/com/sakura/cache/service/impl/RedisServiceImpl.java)
++ 使用redis工具类示例代码：[RedisController](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/java/com/sakura/cloud/demo1/controller/RedisController.java)
 
 
 
@@ -115,21 +116,11 @@
    ```java
    @GetMapping(value = "/users")
    public CommonResult<CommonPage<UserVO>> queryUsers() {
-       try {
-           IPage<UserVO> users = userService.queryUsers();
-           return CommonResult.success(CommonPage.restPage(users));
-       } catch(CloudException e) {
-           log.error(e.getMessage(), e);
-           //返回失败信息给前端
-           return CommonResult.failed(e.getMessage());
-       } catch (Exception e) {
-           //未知异常
-           log.error(e.getMessage(), e);
-           return CommonResult.failed();
-       }
+       IPage<UserVO> users = userService.queryUsers();
+       return CommonResult.success(CommonPage.restPage(users));
    }
    ```
-
+   
 4. URL转码解码
 
    ```java
@@ -276,7 +267,7 @@
 
 2. 集成了Swagger-ui
 
-   `swagger-ui`的配置类：[https://github.com/yanjingfan/boot-parent/blob/master/sakura-web/src/main/java/com/sakura/common/web/config/Swagger2Config.java](https://github.com/yanjingfan/boot-parent/blob/master/sakura-web/src/main/java/com/sakura/common/web/config/Swagger2Config.java)
+   `swagger-ui`的配置类：[Swagger2Config.java](https://github.com/yanjingfan/boot-parent/blob/master/sakura-web/src/main/java/com/sakura/common/web/config/Swagger2Config.java)
 
    **注意：**新建工程的包结构为：`com.sakura.cloud`
 
@@ -337,7 +328,7 @@
 
 2. MybatisPlus分页配置，扫描mapper文件的包路径为：`com.sakura.cloud.**.mapper*`
 
-   代码地址：[https://github.com/yanjingfan/boot-parent/blob/master/sakura-db/src/main/java/com/sakura/db/config/MybatisPlusConfig.java](https://github.com/yanjingfan/boot-parent/blob/master/sakura-db/src/main/java/com/sakura/db/config/MybatisPlusConfig.java)
+   代码地址：[MybatisPlusConfig.java](https://github.com/yanjingfan/boot-parent/blob/master/sakura-db/src/main/java/com/sakura/db/config/MybatisPlusConfig.java)
 
 3. 添加数据库相关配置
 
