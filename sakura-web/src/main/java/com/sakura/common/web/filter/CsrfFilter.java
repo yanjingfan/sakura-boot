@@ -4,7 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -19,6 +21,8 @@ import java.util.regex.Pattern;
  * @auther YangFan
  * @Date 2020/12/26 15:48
  */
+
+@Component
 @ConfigurationProperties(prefix = "security.csrf")
 @WebFilter(filterName = "CsrfFilter", urlPatterns = "/*")
 public class CsrfFilter implements Filter {

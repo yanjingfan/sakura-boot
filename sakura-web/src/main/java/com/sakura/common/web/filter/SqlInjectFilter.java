@@ -3,6 +3,8 @@ package com.sakura.common.web.filter;
 import com.sakura.common.web.wrapper.SQLInjectionHttpServletRequestWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -16,6 +18,7 @@ import java.io.IOException;
  * @Date 2020/11/20 9:37
  */
 
+@Component
 @WebFilter(filterName = "SqlInjectFilter", urlPatterns = "/*")
 public class SqlInjectFilter implements Filter {
 
