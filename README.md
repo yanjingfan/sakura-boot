@@ -440,6 +440,10 @@ eureka :
 
 > 通用消息发布、订阅工具
 
+此模块需要新建消息内容和消息记录两张表，使用时引入`sakura-flyway`模块进行初始化，
+
+建表sql脚本为[V1_0__init_20210507.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-mq/src/main/resources/db/migration/V1_0__init_20210507.sql)
+
 加入依赖
 
 ```xml
@@ -688,7 +692,7 @@ event.publish(destination, defaultEvent);
 
    + 初始化数据库脚本
 
-     [V1__Init.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/resources/db/migration/V1__Init.sql)
+     [V1_0__init_20210507.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/resources/db/migration/V1_0__init_20210507.sql)
 
      
 
