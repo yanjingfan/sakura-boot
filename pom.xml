@@ -12,6 +12,7 @@
         <module>sakura-mq</module>
         <module>sakura-ms</module>
         <module>sakura-web</module>
+        <module>sakura-uid-generator</module>
     </modules>
 
     <parent>
@@ -56,6 +57,7 @@
         <!--<oracle.version>11.2.0.3</oracle.version>-->
         <redisson.version>3.14.0</redisson.version>
         <fastdfs.version>1.26.2</fastdfs.version>
+        <uid.version>1.0.2.RELEASE</uid.version>
     </properties>
 
     <dependencies>
@@ -229,6 +231,27 @@
                 <groupId>com.github.tobato</groupId>
                 <artifactId>fastdfs-client</artifactId>
                 <version>${fastdfs.version}</version>
+            </dependency>
+
+            <!-- uidGenerator -->
+            <dependency>
+                <groupId>com.github.wujun234</groupId>
+                <artifactId>uid-generator-spring-boot-starter</artifactId>
+                <version>${uid.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis-spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-lang</groupId>
+                        <artifactId>commons-lang</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
         </dependencies>
