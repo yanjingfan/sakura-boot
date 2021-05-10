@@ -2,22 +2,23 @@
 
 ## 技术清单	
 
-| 技术         | 版本          | 说明                          |
-| ------------ | ------------- | ----------------------------- |
-| Spring Cloud | Greenwich.SR6 | 快速构建分布式系统的框架      |
-| Spring Boot  | 2.1.9         | 容器+MVC框架                  |
-| MybatisPlus  | 3.3.2         | ORM框架                       |
-| Swagger-UI   | 3.0.0         | 文档生产工具                  |
-| knife4j      | 3.0.0         | 基于swagger更美观好用的文档UI |
-| RabbitMq     | 3.7.14        | 消息队列                      |
-| Redis        | 6.0           | 分布式缓存                    |
-| MySQL        | 8.0           | 关系型数据库                  |
-| easypoi      | 4.2.0         | 文档解析工具                  |
-| Druid        | 1.2.4         | 数据库连接池                  |
-| Lombok       | 1.18.6        | 简化对象封装工具              |
-| fastdfs      | 1.26.2        | 分布式文件系统                |
-| flyway       | 5.2.4         | 数据库版本管理工具            |
-| hutool       | 5.5.7         | 常用工具类                    |
+| 技术          | 版本          | 说明                                     |
+| ------------- | ------------- | ---------------------------------------- |
+| Spring Cloud  | Greenwich.SR6 | 快速构建分布式系统的框架                 |
+| Spring Boot   | 2.1.9         | 容器+MVC框架                             |
+| MybatisPlus   | 3.3.2         | ORM框架                                  |
+| Swagger-UI    | 3.0.0         | 文档生产工具                             |
+| knife4j       | 3.0.0         | 基于swagger更美观好用的文档UI            |
+| RabbitMq      | 3.7.14        | 消息队列                                 |
+| Redis         | 6.0           | 分布式缓存                               |
+| MySQL         | 8.0           | 关系型数据库                             |
+| easypoi       | 4.2.0         | 文档解析工具                             |
+| Druid         | 1.2.4         | 数据库连接池                             |
+| Lombok        | 1.18.6        | 简化对象封装工具                         |
+| fastdfs       | 1.26.2        | 分布式文件系统                           |
+| flyway        | 5.2.4         | 数据库版本管理工具                       |
+| hutool        | 5.5.7         | 常用工具类                               |
+| uid-generator | 1.0.2         | 百度开源的唯一id生成器，雪花算法的升级版 |
 
 ## 脚手架依赖说明
 
@@ -442,7 +443,7 @@ eureka :
 
 此模块需要新建消息内容和消息记录两张表，使用时引入`sakura-flyway`模块进行初始化，
 
-建表sql脚本为[V1_0__init_20210507.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-mq/src/main/resources/db/migration/V1_0__init_20210507.sql)
+建表sql脚本为[V1_1__init_20210510.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-mq/src/main/resources/db/migration/V1_1__init_20210510.sql)
 
 加入依赖
 
@@ -692,7 +693,7 @@ event.publish(destination, defaultEvent);
 
    + 初始化数据库脚本
 
-     [V1_0__init_20210507.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/resources/db/migration/V1_0__init_20210507.sql)
+     [V1_1__init_20210510.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/resources/db/migration/V1_1__init_20210510.sql)
 
      
 
@@ -791,4 +792,63 @@ event.publish(destination, defaultEvent);
    }
    ```
 
+
+### sakura-uid-generator
+
+> 百度的开源ID生成算法。UidGenerator是Java实现的， 基于Snowflake算法的唯一ID生成器。UidGenerator以组件形式工作在应用项目中， 支持自定义workerId位数和初始化策略， 从而适用于docker等虚拟化环境下实例自动重启、漂移等场景。 在实现上， UidGenerator通过借用未来时间来解决sequence天然存在的并发限制； 采用RingBuffer来缓存已生成的UID, 并行化UID的生产和消费， 同时对CacheLine补齐，避免了由RingBuffer带来的硬件级「伪共享」问题. 最终单机QPS可达600万。 
+
+如果手动建表，则可不依赖依赖`sakura-flyway`模块，建表脚本：[V1_1__init_20210510.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-uid-generator/src/main/resources/db/migration/V1_1__init_20210510.sql)
+
+1. 添加依赖
+
+   ```xml
+   <dependency>
+       <groupId>com.sakura</groupId>
+       <artifactId>sakura-uid-generator</artifactId>
+       <version>1.0</version>
+   </dependency>
+   ```
+
+2. 使用示例：参考`sakura-boot-demo`示例项目中的[UidController](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/java/com/sakura/cloud/demo1/controller/UidController.java)
+
+    UidGenerator接口提供了 UID 生成和解析的方法，提供了两种实现: 
+
+   +  DefaultUidGenerator	实时生成 
+   +  CachedUidGenerator	生成一次id之后，按序列号+1生成一批id，缓存，供之后请求 
+
+    如对UID生成性能有要求, 请使用CachedUidGenerator 
+
+3. yml配置
+
+   以下为可选配置, 如未指定将采用默认值
+
+   ```yaml
+   uid:
+     timeBits: 30             # 时间位, 默认:30
+     workerBits: 16           # 机器位, 默认:16
+     seqBits: 7               # 序列号, 默认:7
+     epochStr: "2019-02-20"   # 初始时间, 默认:"2019-02-20"
+     enableBackward: true     # 是否容忍时钟回拨, 默认:true
+     maxBackwardSeconds: 1    # 时钟回拨最长容忍时间（秒）, 默认:1
+     CachedUidGenerator:      # CachedUidGenerator相关参数
+       boostPower: 3          # RingBuffer size扩容参数, 可提高UID生成的吞吐量, 默认:3
+       paddingFactor: 50      # 指定何时向RingBuffer中填充UID, 取值为百分比(0, 100), 默认为50
+       #scheduleInterval: 60    # 默认:不配置此项, 即不实用Schedule线程. 如需使用, 请指定Schedule线程时间间隔, 单位:秒
+   ```
+
    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
