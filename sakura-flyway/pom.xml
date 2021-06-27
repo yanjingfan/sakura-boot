@@ -11,7 +11,7 @@
 
     <artifactId>sakura-flyway</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!-- 添加 flyway 的依赖 -->

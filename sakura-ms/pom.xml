@@ -12,7 +12,7 @@
     <artifactId>sakura-ms</artifactId>
 
     <version>1.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
     <!-- config -->
