@@ -19,6 +19,7 @@
 | flyway        | 5.2.4         | 数据库版本管理工具                       |
 | hutool        | 5.5.7         | 常用工具类                               |
 | uid-generator | 1.0.2         | 百度开源的唯一id生成器，雪花算法的升级版 |
+| minio         | 2021-06-17    | 文件服务器                               |
 
 ## 脚手架依赖说明
 
@@ -834,6 +835,30 @@ event.publish(destination, defaultEvent);
        boostPower: 3          # RingBuffer size扩容参数, 可提高UID生成的吞吐量, 默认:3
        paddingFactor: 50      # 指定何时向RingBuffer中填充UID, 取值为百分比(0, 100), 默认为50
        #scheduleInterval: 60    # 默认:不配置此项, 即不实用Schedule线程. 如需使用, 请指定Schedule线程时间间隔, 单位:秒
+   ```
+
+
+
+
+### sukura-minio
+
+1. 添加依赖
+
+   ```xml
+   <dependency>
+       <groupId>com.sakura</groupId>
+       <artifactId>sakura-minio</artifactId>
+       <version>1.0</version>
+   </dependency>
+   ```
+
+2. yml配置
+
+   ```yaml
+   minio:
+     endpoint: http://216.240.130.167:9000
+     accessKey: username
+     secretKey: password
    ```
 
    
