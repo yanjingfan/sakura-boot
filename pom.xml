@@ -34,6 +34,7 @@
         <java.version>1.8</java.version>
 
         <spring-cloud.version>Greenwich.SR6</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.1.0.RELEASE</spring-cloud-alibaba.version>
         <fastjson.version>1.2.75</fastjson.version>
         <commons-io.version>2.2</commons-io.version>
         <commons-lang3.version>3.11</commons-lang3.version>
@@ -92,6 +93,14 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
