@@ -20,16 +20,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.9.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sakura</groupId>
     <artifactId>sakura-boot</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>boot-parent Maven Webapp</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <name>boot-parent</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -294,6 +291,34 @@
         </dependencies>
 
     </dependencyManagement>
+
+    <repositories>
+        <!-- 配置nexus远程仓库 -->
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://216.240.130.167:8081/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://216.240.130.167:8081/nexus/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://216.240.130.167:8081/nexus/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <finalName>boot-parent</finalName>
