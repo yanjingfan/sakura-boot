@@ -301,21 +301,6 @@
 
     </dependencyManagement>
 
-    <repositories>
-        <!-- 配置nexus远程仓库 -->
-        <repository>
-            <id>nexus</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://216.240.130.167:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <distributionManagement>
         <repository>
             <id>releases</id>
