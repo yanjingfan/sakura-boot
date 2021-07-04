@@ -56,7 +56,7 @@
         <!--<oracle.version>11.2.0.3</oracle.version>-->
         <redisson.version>3.14.0</redisson.version>
         <fastdfs.version>1.26.2</fastdfs.version>
-        <uid.version>1.0.2.RELEASE</uid.version>
+        <uid.version>1.0.3.RELEASE</uid.version>
         <!-- minio版本依赖开始 -->
         <minio.version>8.2.2</minio.version>
         <progressbar.version>0.5.3</progressbar.version>
