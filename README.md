@@ -648,7 +648,7 @@ event.publish(destination, defaultEvent);
      ```xml
      <dependency>
        <groupId>org.springframework.boot</groupId>
-       <artifactId>spring-boot-starter-data-jdbc</artifactId>
+       <artifactId>spring-boot-starter-jdbc</artifactId>
      </dependency>
      
      <dependency>
@@ -746,7 +746,7 @@ event.publish(destination, defaultEvent);
      trackerList:
        - 192.168.1.130:22122
      # 存储服务器storage_server访问地址
-     web-server-url: http://192.168.1.130:8888/
+     web-server-url: http://192.168.1.130/
    ```
 
 4. 工具类 [FastDFSClient](https://github.com/yanjingfan/boot-parent/blob/master/sakura-file-util/src/main/java/com/sakura/common/fastdfs/FastDFSClient.java)
