@@ -1,4 +1,4 @@
-CREATE TABLE `event_record`
+CREATE TABLE IF NOT EXISTS `event_record`
 (
     id                  BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     create_time         DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -24,7 +24,7 @@ CREATE TABLE `event_record`
     INDEX idx_business_key (business_key)
 ) COMMENT '事务消息表';
 
-CREATE TABLE `event_data`
+CREATE TABLE IF NOT EXISTS `event_data`
 (
     id         BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     record_id BIGINT UNSIGNED NOT NULL COMMENT '事务消息记录ID',
