@@ -299,7 +299,7 @@ mybatis-plus:
 
 ### sakura-ms
 
-> SpringCloud
+> 集成了nacos，openfeign微服务组件
 
 1. 加入依赖
 
@@ -311,47 +311,32 @@ mybatis-plus:
    </parent>
    ```
 
-2. eureka客户端
+2. feigin客户端（注意：使用时，需要在启动类上添加`@EnableFeignClients`注解）
 
-3. config客户端
+3. bootstrap.yml配置
 
-4. feigin客户端（注意：需要在启动类上添加`@EnableFeignClients`注解）
+   ```yaml
+   ############################################################################################
+   ################################# 应用名称 与 配置远程配置仓库 ########################################
+   ############################################################################################
+   spring :
+     application :
+       name : web-demo
+     cloud:
+       nacos:
+         config:
+           server-addr: 216.240.130.167:8848
+           namespace: cfcecf2f-dbdc-4801-8aad-bc67bc419384
+           file-extension: yaml #获取的yaml格式的配置
+         discovery:
+           server-addr: 216.240.130.167:8848
+           namespace: cfcecf2f-dbdc-4801-8aad-bc67bc419384
+           register-enabled: true
+     profiles:
+       active: dev
+   ```
 
-```yaml
-############################################################################################
-################################# 应用名称 与 配置远程配置仓库 ##############################################################################################
-spring :
-  authentication: true
-  application :
-    name : sakura-demo                # 本项目的服务名
-  cloud:
-    config:
-      profile: dev
-      label: master
-      discovery:
-        enabled: false                 # 生产环境为true，开发环境可为false
-        service-id: ly-cloud-config-server        # config的服务名
-############################################################################################
-###################################### 运行容器端口设置 ##########################################
-############################################################################################
-server :
-  port : 8080
-  tomcat :
-   uri-encoding : UTF-8
-############################################################################################
-################################### eureka Server ##########################################
-############################################################################################
-eureka :
-  instance :
-    prefer-ip-address : true
-    lease-renewal-interval-in-seconds : 30
-    lease-expiration-duration-in-seconds : 90
-  client :
-    service-url :
-      defaultZone : ${defaultZone:http://${discovery:discovery}:1200/eureka/}
-    register-with-eureka : false            # 生产环境为true，开发环境可为false       
-    fetch-registry : false                  # 生产环境为true，开发环境可为false
-```
+   
 
 ### sakura-mq
 
@@ -454,7 +439,7 @@ eureka :
 
 ### sukura-minio
 
-> 继承了minio文件上传工具类
+> 集成了minio文件上传工具类
 
 
 
