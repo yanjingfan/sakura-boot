@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class CommonPage<T> {
 
-    private Long page;
+    private Long pageNum;
     private Long pageSize;
     private Long totalPage;
     private Long total;
@@ -26,7 +26,7 @@ public class CommonPage<T> {
         //if (pageInfo != null && pageInfo.getTotal() != 0) {
         CommonPage<T> result = new CommonPage<T>();
         result.setTotalPage(pageInfo.getPages());
-        result.setPage(pageInfo.getCurrent());
+        result.setPageNum(pageInfo.getCurrent());
         result.setPageSize(pageInfo.getSize());
         result.setTotal(pageInfo.getTotal());
         result.setList(pageInfo.getRecords());
@@ -49,7 +49,7 @@ public class CommonPage<T> {
         int total = list.size();
         result.setTotal((long)total);
         List<T> tList = list.stream().skip((page - 1) * size).limit(size).collect(Collectors.toList());
-        result.setPage(page);
+        result.setPageNum(page);
         result.setPageSize(size);
         long totalPages = (total + size - 1) / size;
         result.setTotalPage(totalPages);
@@ -57,12 +57,12 @@ public class CommonPage<T> {
         return result;
     }
 
-    public Long getPage() {
-        return page;
+    public Long getPageNum() {
+        return pageNum;
     }
 
-    public void setPage(Long page) {
-        this.page = page;
+    public void setPageNum(Long pageNum) {
+        this.pageNum = pageNum;
     }
 
     public Long getPageSize() {
