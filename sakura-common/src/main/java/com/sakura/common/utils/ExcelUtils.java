@@ -55,7 +55,7 @@ public class ExcelUtils {
 
     private static void downLoadExcel(String fileName, HttpServletResponse response, Workbook workbook) throws IOException {
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("content-Type", "application/vnd.ms-excel");
+        response.setHeader("content-Type", "application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName,"UTF-8"));
         workbook.write(response.getOutputStream());
     }
