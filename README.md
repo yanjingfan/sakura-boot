@@ -27,7 +27,7 @@
 | --------------------------------------- | ------------ |
 | SpringCloud Security + Gateway + Oauth2 | 待集成       |
 | 微服务聚合swagger                       | 待集成       |
-| aop日志公共模块                         | 待集成       |
+| aop日志公共模块                         | 已完成       |
 | PowerJob分布式调度                      | 待集成       |
 | sa-token                                | 待集成       |
 
@@ -230,7 +230,9 @@
     大数据量: CsvImportUtil.importCsv(InputStream inputstream, Class<?> pojoClass,CsvImportParams params, IReadHandler readHandler)
    ```
 
+9. aop日志打印
 
+   在`sakura-boot-demo`工程`controller`层的方法上，添加`@MyLog`注解，即可打印出请求的参数，方法，这个接口是否正常返回等日志信息
 
 ### sakura-web
 
