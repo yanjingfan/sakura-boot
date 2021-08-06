@@ -10,4 +10,4 @@ MODIFIED TIMESTAMP NOT NULL COMMENT 'modified time',
 CREATED TIMESTAMP NOT NULL COMMENT 'created time',
 PRIMARY KEY(ID)
 )
- COMMENT='DB WorkerID Assigner for UID Generator',ENGINE = INNODB;
+COMMENT='DB WorkerID Assigner for UID Generator',ENGINE = INNODB;
