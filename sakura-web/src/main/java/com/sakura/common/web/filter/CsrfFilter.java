@@ -1,10 +1,10 @@
 package com.sakura.common.web.filter;
 
+import com.sakura.common.web.properties.WebSecurityProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.annotation.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -23,34 +23,19 @@ import java.util.regex.Pattern;
  */
 
 @Component
-@ConfigurationProperties(prefix = "security.csrf")
+//@ConfigurationProperties(prefix = "security.csrf")
 @WebFilter(filterName = "CsrfFilter", urlPatterns = "/*")
 public class CsrfFilter implements Filter {
 
     private static final Logger log = LoggerFactory.getLogger(CsrfFilter.class);
 
+    @Autowired
+    private WebSecurityProperties properties;
+
     /**
      * 过滤器配置对象
      */
     FilterConfig filterConfig = null;
-
-    /**
-     * 是否启用
-     */
-    private boolean enable = true;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
-
-    /**
-     * 忽略的URL
-     */
-    private List<String> excludes;
-
-    public void setExcludes(List<String> excludes) {
-        this.excludes = excludes;
-    }
 
     /**
      * 初始化
@@ -68,8 +53,9 @@ public class CsrfFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
+        boolean enabled = properties.getCsrf().isEnabled();
         // 不启用或者已忽略的URL不拦截
-        if (!enable || isExcludeUrl(request.getServletPath())) {
+        if (enabled || isExcludeUrl(request.getServletPath())) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -107,6 +93,7 @@ public class CsrfFilter implements Filter {
      * @return true-忽略，false-过滤
      */
     private boolean isExcludeUrl(String url) {
+        List<String> excludes = properties.getCsrf().getExcludes();
         if (excludes == null || excludes.isEmpty()) {
             return false;
         }
