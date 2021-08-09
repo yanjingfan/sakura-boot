@@ -1,9 +1,11 @@
 package com.sakura.common.web.interceptor;
 
+import com.sakura.common.web.properties.WebSecurityProperties;
 import com.sakura.common.web.wrapper.SQLInjectionHttpServletRequestWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -20,34 +22,21 @@ import java.util.regex.Pattern;
  * @auther YangFan
  * @Date 2021/3/8 16:08
  */
-@ConfigurationProperties(prefix = "security.sql")
+//@ConfigurationProperties(prefix = "security.sql")
 public class SqlInterceptor extends HandlerInterceptorAdapter {
+
     private static final Logger log = LoggerFactory.getLogger(SqlInterceptor.class);
 
-
-    /**
-     * 是否启用
-     */
-    private boolean enable = true;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
-
-    /**
-     * 忽略的URL
-     */
-    private List<String> excludes;
-
-    public void setExcludes(List<String> excludes) {
-        this.excludes = excludes;
-    }
+    @Autowired
+    private WebSecurityProperties properties;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        boolean enabled = properties.getSql().isEnabled();
+        System.err.println("sql: "+enabled);
         // 不启用或者已忽略的URL不拦截
-        if (!enable || isExcludeUrl(request.getServletPath())) {
+        if (!enabled || isExcludeUrl(request.getServletPath())) {
             return true;
         }
 
@@ -134,6 +123,8 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
      * @return true-忽略，false-过滤
      */
     private boolean isExcludeUrl(String url) {
+        List<String> excludes = properties.getSql().getExcludes();
+        System.err.println(excludes);
         if (excludes == null || excludes.isEmpty()) {
             return false;
         }
