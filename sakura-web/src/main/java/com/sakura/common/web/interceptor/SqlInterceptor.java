@@ -34,7 +34,6 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         boolean enabled = properties.getSql().isEnabled();
-        System.err.println("sql: "+enabled);
         // 不启用或者已忽略的URL不拦截
         if (!enabled || isExcludeUrl(request.getServletPath())) {
             return true;
@@ -124,7 +123,6 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
      */
     private boolean isExcludeUrl(String url) {
         List<String> excludes = properties.getSql().getExcludes();
-        System.err.println(excludes);
         if (excludes == null || excludes.isEmpty()) {
             return false;
         }
