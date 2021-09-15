@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentMap;
 @Slf4j
 @Aspect
 @Component
-public class RateLimiterAspect {
+public class GuavaRateLimiterAspect {
     private static final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = new ConcurrentHashMap<>();
 
     @Pointcut("@annotation(com.sakura.common.ratelimit.guava.RateLimiter)")
