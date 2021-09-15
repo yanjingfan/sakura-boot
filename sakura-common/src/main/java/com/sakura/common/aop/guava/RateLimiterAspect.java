@@ -1,5 +1,6 @@
-package com.sakura.common.aop.rateLimiter;
+package com.sakura.common.aop.guava;
 
+import com.sakura.common.aop.guava.RateLimiter;
 import com.sakura.common.exception.YWarmingException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +27,7 @@ import java.util.concurrent.ConcurrentMap;
 public class RateLimiterAspect {
     private static final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> RATE_LIMITER_CACHE = new ConcurrentHashMap<>();
 
-    @Pointcut("@annotation(com.sakura.common.aop.rateLimiter.RateLimiter)")
+    @Pointcut("@annotation(com.sakura.common.aop.guava.RateLimiter)")
     public void rateLimit() {
 
     }
