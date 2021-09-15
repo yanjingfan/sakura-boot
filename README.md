@@ -233,6 +233,10 @@
 9. aop日志打印
 
    在`sakura-boot-demo`工程`controller`层的方法上，添加`@MyLog`注解，即可打印出请求的参数，方法，这个接口是否正常返回等日志信息
+   
+10. aop结合`Guava`的`RateLimiter`实现限流
+
+    在`sakura-boot-demo`工程`controller`层的方法上，添加`@RateLimiter`注解，具体用法可参考[sakura-boot-demo/UserController.java](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/java/com/sakura/cloud/demo1/controller/UserController.java)类中的方法上的注解
 
 ### sakura-web
 
