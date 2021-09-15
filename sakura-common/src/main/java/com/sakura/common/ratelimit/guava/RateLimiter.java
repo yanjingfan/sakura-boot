@@ -1,4 +1,4 @@
-package com.sakura.common.aop.guava;
+package com.sakura.common.ratelimit.guava;
 
 import org.springframework.core.annotation.AliasFor;
 
