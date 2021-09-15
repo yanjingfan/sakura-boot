@@ -7,7 +7,7 @@ public class YInfoException extends CloudException{
 	 * @param warming
 	 */
 	public YInfoException(String warming) {
-		super("businessLogicInfo["+warming+"]");
+		super(warming);
 	}
 
 }

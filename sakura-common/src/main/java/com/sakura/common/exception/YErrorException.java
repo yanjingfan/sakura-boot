@@ -7,7 +7,7 @@ public class YErrorException extends CloudException{
 	 * @param warming
 	 */
 	public YErrorException(String warming) {
-		super("businessLogicError["+warming+"]");
+		super(warming);
 	}
 
 }
