@@ -30,6 +30,8 @@
 | aop日志公共模块                         | 已完成       |
 | PowerJob分布式调度                      | 待集成       |
 | sa-token                                | 待集成       |
+| Redis + Lua 脚本实现分布式限流          | 已完成       |
+| Guava RateLimiter 实现单机版限流        | 已完成       |
 
 ## 脚手架依赖说明
 
@@ -53,7 +55,7 @@
 
 > 提供`reids`缓存操作
 
-
+在`controller`层使用此模块的`@RateLimiter`注解可实现限流
 
 ### sakura-common
 
