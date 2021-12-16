@@ -33,9 +33,9 @@
 | Redis + Lua 脚本实现分布式限流          | 已完成       |
 | Guava RateLimiter 实现单机版限流        | 已完成       |
 
+## 脚手架使用demo
 
-
-[脚手架使用demo](https://github.com/yanjingfan/sakura-boot-demo)
+[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo)
 
 ## 脚手架依赖说明
 
