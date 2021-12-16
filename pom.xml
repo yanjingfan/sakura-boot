@@ -30,6 +30,8 @@
     <name>sakura-boot</name>
 
     <properties>
+        <!-- log4j2漏洞原因，升级到最新安全版本 -->
+        <log4j2.version>2.16.0</log4j2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
