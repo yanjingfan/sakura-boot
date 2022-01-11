@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.9.RELEASE</version>
+        <version>2.3.12.RELEASE</version>
     </parent>
     <groupId>com.sakura</groupId>
     <artifactId>sakura-boot</artifactId>
@@ -36,9 +36,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <spring-cloud.version>Greenwich.SR6</spring-cloud.version>
-        <spring-cloud-alibaba.version>2.1.0.RELEASE</spring-cloud-alibaba.version>
-        <fastjson.version>1.2.75</fastjson.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.7.RELEASE</spring-cloud-alibaba.version>
+        <fastjson.version>1.2.79</fastjson.version>
         <commons-io.version>2.2</commons-io.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <commons-codec.version>1.15</commons-codec.version>
@@ -123,13 +123,11 @@
             </dependency>
 
             <!-- fastjson -->
-            <!--
-                <dependency>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>fastjson</artifactId>
-                    <version>${fastjson.version}</version>
-                </dependency>
-            -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
 
             <!-- commons -->
             <dependency>
