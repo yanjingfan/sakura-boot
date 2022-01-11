@@ -39,7 +39,7 @@
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.7.RELEASE</spring-cloud-alibaba.version>
         <fastjson.version>1.2.79</fastjson.version>
-        <commons-io.version>2.2</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <commons-codec.version>1.15</commons-codec.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
