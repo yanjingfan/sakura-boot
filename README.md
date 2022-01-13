@@ -59,7 +59,15 @@
 
 > 提供`reids`缓存操作
 
-在`controller`层使用此模块的`@RateLimiter`注解可实现限流
+```xml
+<dependency>
+    <groupId>com.sakura</groupId>
+    <artifactId>sakura-common</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+引入此依赖后，在`controller`层使用此模块的`@RateLimiter`注解可实现限流
 
 ### sakura-common
 
@@ -75,174 +83,143 @@
    </dependency>
    ```
 
-2. 通用异常类使用，只在业务层向外抛出
+2. 常用功能
    
-   [通用异常代码地址](https://github.com/yanjingfan/boot-parent/tree/master/sakura-common/src/main/java/com/sakura/common/exception)
+   - 日志打印
+     
+     在`controller`层的方法上，添加`@MyLog`注解，即可打印出请求的参数，方法，这个接口是否正常返回等日志信息
    
-   ```java
-   @Override
-   public void saveUser(UserDTO userDTO) {
-       try {
-          ....
-          if (result == 0) {
-                  throw new YErrorException("添加用户失败！");
-          }
-       } catch (Exception e) {
-           //未知异常，通用处理
-           throw new CloudException("用户插入出错！", e);
-       }
-   }
-   ```
-
-3. 统一返回结构
+   - aop结合`Guava`的`RateLimiter`实现限流
+     
+     在`controller`层的方法上，添加`@RateLimiter`注解，具体用法可参考[sakura-boot-demo/UserController.java](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/java/com/sakura/cloud/demo1/controller/UserController.java)类中的方法上的注解
+   + 通用异常类，如`YErrorException`、`CloudException`等，用法如下
+     
+     ```java
+     @Override
+     public void saveUser(UserDTO userDTO) {
+         try {
+            ....
+            if (result == 0) {
+                    throw new YErrorException("添加用户失败！");
+            }
+         } catch (Exception e) {
+             //未知异常，通用处理
+             throw new CloudException("用户插入出错！", e);
+         }
+     }
+     ```
    
-   将MP查询到的分页信息转换使用`CommonPage`类的`restPage`方法
+   + 公共返回类
+     
+     分页结果集封装：`CommonPage.restPage`自定义分页处理
+     
+     公共返回：使用`com.sakura.common.result.CommonResult`相关API
+     
+     用法如下
+     
+     ```java
+     @GetMapping(value = "/users")
+     public CommonResult<CommonPage<UserVO>> queryUsers() {
+         IPage<UserVO> users = userService.queryUsers();
+         return CommonResult.success(CommonPage.restPage(users));
+     }
+     ```
    
-   返回给前端结果封装使用`com.sakura.common.result.CommonResult`类，
-   
-   ```java
-   @GetMapping(value = "/users")
-   public CommonResult<CommonPage<UserVO>> queryUsers() {
-       IPage<UserVO> users = userService.queryUsers();
-       return CommonResult.success(CommonPage.restPage(users));
-   }
-   ```
-
-4. URL转码解码
-   
-   ```java
-   @Test
-   public void testURLCodec() throws Exception {
-       URLCodec codec = new URLCodec();
-       String data = "http://urlCode";
-       //转码
-       String encode = codec.encode(data, "UTF-8");
-       System.out.println("url转码后的结果：" + encode);
-       //解码
-       String decode = codec.decode(encode, "UTF-8");
-       System.out.println("url解码后的结果：" + decode);
-   }
-   ```
-   
-   运行结果：
-   
-   ```txt
-   url转码后的结果：http%3A%2F%2FurlCode
-   url解码后的结果：http://urlCode
-   ```
-
-5. 加密解密
-   
-   + Base64
+   + URL转码解码
      
      ```java
      @Test
-     public void testBase64() {
-         System.out.println("===============base64======================");
-         byte[] data = "sakura-demo".getBytes();
-         Base64 base64 = new Base64();
+     public void testURLCodec() throws Exception {
+         URLCodec codec = new URLCodec();
+         String data = "http://urlCode";
          //转码
-         String encode = base64.encodeAsString(data);
-         System.out.println("base64加密后：" + encode);
+         String encode = codec.encode(data, "UTF-8");
+         System.out.println("url转码后的结果：" + encode);
          //解码
-         String decode = new String(base64.decode(encode));
-         System.out.println("base64解密后：" + decode);
+         String decode = codec.decode(encode, "UTF-8");
+         System.out.println("url解码后的结果：" + decode);
      }
      ```
+   
+   + 加密解密
      
-     运行结果：
+     + Base64
+       
+       ```java
+       @Test
+       public void testBase64() {
+           System.out.println("===============base64======================");
+           byte[] data = "sakura-demo".getBytes();
+           Base64 base64 = new Base64();
+           //转码
+           String encode = base64.encodeAsString(data);
+           System.out.println("base64加密后：" + encode);
+           //解码
+           String decode = new String(base64.decode(encode));
+           System.out.println("base64解密后：" + decode);
+       }
+       ```
      
-     ```txt
-     ===============base64======================
-     base64加密后：c2FrdXJhLWRlbW8=
-     base64解密后：sakura-demo
-     ```
+     + 使用加密工具类DigestUtils
+       
+       ```java
+       /**
+        * DigestUtils工具类里有多种加密的方式，自行选择
+        */
+       @Test
+       public void testDigestUtils() {
+           System.out.println("===============testMD5======================");
+           String result = DigestUtils.md5Hex("sakura-demo-md5");
+           System.out.println("md5加密后：" + result);
+       
+           System.out.println("===============testsha256Hex======================");
+           String sha256Hex = DigestUtils.sha256Hex("sakura-demo-sha256");
+           System.out.println("sha256加密后：" + sha256Hex);
+       }
+       ```
    
-   + 使用加密工具类DigestUtils
+   + 第三方工具类，如commons-lang3、commons-collections、commons-io、hutool、mapstruct、easypoi等
      
-     ```java
-     /**
-      * DigestUtils工具类里有多种加密的方式，自行选择
-      */
-     @Test
-     public void testDigestUtils() {
-         System.out.println("===============testMD5======================");
-         String result = DigestUtils.md5Hex("sakura-demo-md5");
-         System.out.println("md5加密后：" + result);
-     
-         System.out.println("===============testsha256Hex======================");
-         String sha256Hex = DigestUtils.sha256Hex("sakura-demo-sha256");
-         System.out.println("sha256加密后：" + sha256Hex);
-     }
-     ```
-     
-     运行结果：
-     
-     ```txt
-     ===============testMD5======================
-     md5加密后：01854bc4662d707a3a4000e87bac9a58
-     ===============testsha256Hex======================
-     sha256加密后：cb107ba0b5c0bca75cf6db4d5d72251cf8ed61b811e1a31035bc78d4779f2ba1
-     ```
-
-6. SpringBeanCtx
-   
-   [代码地址](https://github.com/yanjingfan/boot-parent/blob/master/sakura-common/src/main/java/com/sakura/common/utils/SpringBeanCtxUtils.java)
-
-7. apache-common
-   
-   引入了apache的common工具包，无需自己引入
-
-8. 文档导入导出使用easypoi
-   
-   [官方文档](http://doc.wupaas.com/docs/easypoi/)
-   
-   `什么场景该用哪个方法`
-   
-   ```txt
-    - 导出
-    1.正规excel导出 (格式简单,数据量可以,5W以内吧)
-    注解方式:  ExcelExportUtil.exportExcel(ExportParams entity, Class<?> pojoClass,Collection<?> dataSet) 
-    2.不定多少列,但是格式依然简单数据库不大
-    自定义方式: ExcelExportUtil.exportExcel(ExportParams entity, List<ExcelExportEntity> entityList,Collection<?> dataSet)
-    3.数据量大超过5W,还在100W以内
-    注解方式 ExcelExportUtil.exportBigExcel(ExportParams entity, Class<?> pojoClass,IExcelExportServer server, Object queryParams)
-    自定义方式: ExcelExportUtil.exportBigExcel(ExportParams entity, List<ExcelExportEntity> excelParams,IExcelExportServer server, Object queryParams)
-    4.样式复杂,数据量尽量别大
-    模板导出 ExcelExportUtil.exportExcel(TemplateExportParams params, Map<String, Object> map)
-    5.一次导出多个风格不一致的sheet
-    模板导出 ExcelExportUtil.exportExcel(Map<Integer, Map<String, Object>> map,TemplateExportParams params) 
-    6.一个模板但是要导出非常多份
-    模板导出 ExcelExportUtil.exportExcelClone(Map<Integer, List<Map<String, Object>>> map,TemplateExportParams params)
-    7.模板无法满足你的自定义,试试html
-    自己构造html,然后我给你转成excel  ExcelXorHtmlUtil.htmlToExcel(String html, ExcelType type)
-    8.数据量过百万级了.放弃excel吧,csv导出
-    注解方式: CsvExportUtil.exportCsv(CsvExportParams params, Class<?> pojoClass, OutputStream outputStream)
-    自定义方式: CsvExportUtil.exportCsv(CsvExportParams params, List<ExcelExportEntity> entityList, OutputStream outputStream) 
-    9.word导出
-    模板导出: WordExportUtil.exportWord07(String url, Map<String, Object> map)
-   
-    - 导入 
-    如果想提高性能 ImportParams 的concurrentTask 可以帮助并发导入,仅单行,最小1000
-    excel有单个的那种特殊读取,readSingleCell 参数可以支持
-    1. 不需要检验,数据量不大(5W以内)
-    注解或者MAP: ExcelImportUtil.importExcel(File file, Class<?> pojoClass, ImportParams params)
-    2. 需要导入,数据量不大
-    注解或者MAP: ExcelImportUtil.importExcelMore(InputStream inputstream, Class<?> pojoClass, ImportParams params)
-    3. 数据量大了,或者你有特别多的导入操作,内存比较少,仅支持单行
-    SAX方式  ExcelImportUtil.importExcelBySax(InputStream inputstream, Class<?> pojoClass, ImportParams params, IReadHandler handler)
-    4. 数据量超过EXCEL限制,CSV读取
-    小数据量: CsvImportUtil.importCsv(InputStream inputstream, Class<?> pojoClass,CsvImportParams params)
-    大数据量: CsvImportUtil.importCsv(InputStream inputstream, Class<?> pojoClass,CsvImportParams params, IReadHandler readHandler)
-   ```
-
-9. aop日志打印
-   
-   在`sakura-boot-demo`工程`controller`层的方法上，添加`@MyLog`注解，即可打印出请求的参数，方法，这个接口是否正常返回等日志信息
-
-10. aop结合`Guava`的`RateLimiter`实现限流
-    
-    在`sakura-boot-demo`工程`controller`层的方法上，添加`@RateLimiter`注解，具体用法可参考[sakura-boot-demo/UserController.java](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/java/com/sakura/cloud/demo1/controller/UserController.java)类中的方法上的注解
+     + [easypoi官方文档](http://doc.wupaas.com/docs/easypoi/)
+       
+        `什么场景该用哪个方法`
+       
+       ```textile
+        - 导出
+        1.正规excel导出 (格式简单,数据量可以,5W以内吧)
+        注解方式:  ExcelExportUtil.exportExcel(ExportParams entity, Class<?> pojoClass,Collection<?> dataSet) 
+        2.不定多少列,但是格式依然简单数据库不大
+        自定义方式: ExcelExportUtil.exportExcel(ExportParams entity, List<ExcelExportEntity> entityList,Collection<?> dataSet)
+        3.数据量大超过5W,还在100W以内
+        注解方式 ExcelExportUtil.exportBigExcel(ExportParams entity, Class<?> pojoClass,IExcelExportServer server, Object queryParams)
+        自定义方式: ExcelExportUtil.exportBigExcel(ExportParams entity, List<ExcelExportEntity> excelParams,IExcelExportServer server, Object queryParams)
+        4.样式复杂,数据量尽量别大
+        模板导出 ExcelExportUtil.exportExcel(TemplateExportParams params, Map<String, Object> map)
+        5.一次导出多个风格不一致的sheet
+        模板导出 ExcelExportUtil.exportExcel(Map<Integer, Map<String, Object>> map,TemplateExportParams params) 
+        6.一个模板但是要导出非常多份
+        模板导出 ExcelExportUtil.exportExcelClone(Map<Integer, List<Map<String, Object>>> map,TemplateExportParams params)
+        7.模板无法满足你的自定义,试试html
+        自己构造html,然后我给你转成excel  ExcelXorHtmlUtil.htmlToExcel(String html, ExcelType type)
+        8.数据量过百万级了.放弃excel吧,csv导出
+        注解方式: CsvExportUtil.exportCsv(CsvExportParams params, Class<?> pojoClass, OutputStream outputStream)
+        自定义方式: CsvExportUtil.exportCsv(CsvExportParams params, List<ExcelExportEntity> entityList, OutputStream outputStream) 
+        9.word导出
+        模板导出: WordExportUtil.exportWord07(String url, Map<String, Object> map)
+       
+        - 导入 
+        如果想提高性能 ImportParams 的concurrentTask 可以帮助并发导入,仅单行,最小1000
+        excel有单个的那种特殊读取,readSingleCell 参数可以支持
+        1. 不需要检验,数据量不大(5W以内)
+        注解或者MAP: ExcelImportUtil.importExcel(File file, Class<?> pojoClass, ImportParams params)
+        2. 需要导入,数据量不大
+        注解或者MAP: ExcelImportUtil.importExcelMore(InputStream inputstream, Class<?> pojoClass, ImportParams params)
+        3. 数据量大了,或者你有特别多的导入操作,内存比较少,仅支持单行
+        SAX方式  ExcelImportUtil.importExcelBySax(InputStream inputstream, Class<?> pojoClass, ImportParams params, IReadHandler handler)
+        4. 数据量超过EXCEL限制,CSV读取
+        小数据量: CsvImportUtil.importCsv(InputStream inputstream, Class<?> pojoClass,CsvImportParams params)
+        大数据量: CsvImportUtil.importCsv(InputStream inputstream, Class<?> pojoClass,CsvImportParams params, IReadHandler readHandler)
+       ```
 
 ### sakura-web
 
@@ -250,108 +227,17 @@
 
 ### sakura-db
 
-> mysql连接包、druid连接池、MP分页封装
+> 数据库相关依赖，mysql连接依赖、MybatisPlus依赖、jpa依赖
 
-1. 加入依赖
-
-```xml
-<parent>
-    <groupId>com.sakura</groupId>
-    <artifactId>sakura-db</artifactId>
-    <version>1.0</version>
-</parent>
-```
-
-2. MybatisPlus分页配置，扫描mapper文件的包路径为：`com.sakura.cloud.**.mapper*`
-   
-   代码地址：[MybatisPlusConfig.java](https://github.com/yanjingfan/boot-parent/blob/master/sakura-db/src/main/java/com/sakura/db/config/MybatisPlusConfig.java)
-
-3. 添加数据库相关配置
-
-```yaml
-####################################################################################
-###################################DataSource Config################################
-####################################################################################
-spring:
-  datasource:
-    # JDBC 配置
-    type: com.alibaba.druid.pool.DruidDataSource
-    #    schema:
-    #      - classpath:/db/schema-mysql.sql
-    #    data:
-    #      - classpath:/db/data-mysql.sql
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.1.130:3306/sakura?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: root
-    password: admin
-    druid:
-      # 连接池配置
-      initial-size: 5
-      min-idle: 5
-      max-active: 20
-      max-wait: 60000
-      pool-prepared-statements: false
-      max-pool-prepared-statement-per-connection-size: 20
-      max-open-prepared-statements: 20
-      validation-query: SELECT 'x' from dual
-      validation-query-timeout: 30000
-      test-on-borrow: false
-      test-on-return: false
-      test-while-idle: true
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      max-evictable-idle-time-millis: 300000
-      filters: stat  
-
-#sql日志打印
-mybatis-plus:
-# 会默认去mapper文件夹中找到xml文件
-#  mapper-locations: classpath:/mapper/**/*Mapper.xml
-  configuration:
-    map-underscore-to-camel-case: true
-    # 关闭二级缓存
-    cache-enabled: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-```
++ MybatisPlus分页配置，扫描mapper文件的包路径为`com.sakura.cloud.**.mapper*`
+  
+  包扫描路径修改：[MybatisPlusConfig.java](https://github.com/yanjingfan/boot-parent/blob/master/sakura-db/src/main/java/com/sakura/db/config/MybatisPlusConfig.java)
 
 ### sakura-ms
 
-> 集成了nacos，openfeign微服务组件
+> 集成了nacos，openfeign、gateway微服务组件
 
-1. 加入依赖
-   
-   ```xml
-   <parent>
-       <groupId>com.sakura</groupId>
-       <artifactId>sakura-ms</artifactId>
-       <version>1.0</version>
-   </parent>
-   ```
-
-2. feigin客户端（注意：使用时，需要在启动类上添加`@EnableFeignClients`注解）
-
-3. bootstrap.yml配置
-   
-   ```yaml
-   ############################################################################################
-   ################################# 应用名称 与 配置远程配置仓库 ########################################
-   ############################################################################################
-   spring :
-     application :
-       name : web-demo
-     cloud:
-       nacos:
-         config:
-           server-addr: 216.240.130.167:8848
-           namespace: cfcecf2f-dbdc-4801-8aad-bc67bc419384
-           file-extension: yaml #获取的yaml格式的配置
-         discovery:
-           server-addr: 216.240.130.167:8848
-           namespace: cfcecf2f-dbdc-4801-8aad-bc67bc419384
-           register-enabled: true
-     profiles:
-       active: dev
-   ```
++ feigin客户端（注意：使用时，需要在启动类上添加`@EnableFeignClients`注解）
 
 ### sakura-mq
 
@@ -365,38 +251,11 @@ mybatis-plus:
 
 > 初始化数据库，支持数据库脚本的版本管理
 
-`flyway`操作数据库，因此需要引入数据库驱动以及数据源依赖，所以配合`sakura-db`模块一起使用即可
+`flyway`初始化数据库，需要引入数据库驱动以及数据源依赖，配合`sakura-db`模块一起
 
-1. 加入依赖
-   
-   + Flyway 依赖
-     
-     ```xml
-     <parent>
-         <groupId>com.sakura</groupId>
-         <artifactId>sakura-flyway</artifactId>
-         <version>1.0</version>
-     </parent>
-     ```
-   
-   + 初始化表结构，需要操作数据库，因此引入数据库驱动以及数据源依赖
-     
-     如果项目中不使用`sakura-db`模块，则需要引入相关依赖（这里用 spring-boot-starter-data-jdbc）
-     
-     ```xml
-     <dependency>
-       <groupId>org.springframework.boot</groupId>
-       <artifactId>spring-boot-starter-jdbc</artifactId>
-     </dependency>
-     
-     <dependency>
-       <groupId>mysql</groupId>
-       <artifactId>mysql-connector-java</artifactId>
-       <scope>runtime</scope>
-     </dependency>
-     ```
+引入即可
 
-2. Flyway 知识补充
+1. `Flyway`知识
    
    + Flyway 默认会去读取 `classpath:db/migration`，可以通过 `spring.flyway.locations` 去指定自定义路径，多个路径使用半角英文逗号分隔，内部资源使用 `classpath:`，外部资源使用 `file:`
    
@@ -410,37 +269,19 @@ mybatis-plus:
    
    + Flyway 默认情况下会去清空原始库，再重新执行 SQL 脚本，这在生产环境下是不可取的，因此需要将这个配置关闭，`spring.flyway.clean-disabled = true`
 
-3. 使用：参考[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo)工程
-   
-   + yml配置
-     
-     ```yaml
-     spring:
-       flyway:
-         enabled: true
-         # 迁移前校验 SQL 文件是否存在问题
-         validate-on-migrate: true
-         # 生产环境一定要关闭
-         clean-disabled: true
-         # 校验路径下是否存在 SQL 文件
-         check-location: false
-         # 最开始已经存在表结构，且不存在 flyway_schema_history 表时，需要设置为 true
-         baseline-on-migrate: true
-         # 基础版本 0
-         baseline-version: 0
-     ```
-   
-   + 初始化数据库脚本
-     
-     [V1_1__init_20210510.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/src/main/resources/db/migration/V1_1__init_20210510.sql)
-
 ### sakura-file-util
 
 > 集成了fastdfs文件上传下载工具类
 
 ### sakura-uid-generator
 
-> 百度的开源ID生成算法。UidGenerator是Java实现的， 基于Snowflake算法的唯一ID生成器。UidGenerator以组件形式工作在应用项目中， 支持自定义workerId位数和初始化策略， 从而适用于docker等虚拟化环境下实例自动重启、漂移等场景。 在实现上， UidGenerator通过借用未来时间来解决sequence天然存在的并发限制； 采用RingBuffer来缓存已生成的UID, 并行化UID的生产和消费， 同时对CacheLine补齐，避免了由RingBuffer带来的硬件级「伪共享」问题. 最终单机QPS可达600万。 
+> 百度的开源分布式ID生成器 
+
+[baidu/uid-generator: UniqueID generator (github.com)](https://github.com/baidu/uid-generator)
+
+使用此模块生成分布式id，需要先建一张记录表，每次重启项目都会生成一条记录
+
+建表sql脚本：[初始化脚本.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-uid-generator/src/main/resources/db/migration/V2021010102__sakura-uid-generator-1.0.0_%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.sql)
 
 ### sukura-minio
 
@@ -449,3 +290,7 @@ mybatis-plus:
 ### sukura-cron
 
 > 动态定时器配置
+
+使用此模块，需要初始化一张任务记录表，记录任务的开启状态，cron表达式等等
+
+建表sql脚本：[初始化脚本.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-cron/src/main/resources/db/migration/V2021101801__sakura-cron-1.0.0_%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1.sql)
