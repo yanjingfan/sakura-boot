@@ -2,26 +2,26 @@
 
 ## 技术清单
 
-| 技术                   | 版本          | 说明                    |
-| -------------------- | ----------- | --------------------- |
-| Spring Cloud         | Hoxton.SR12 | 快速构建分布式系统的框架          |
-| Spring Cloud Alibaba | 2.2.7       | 快速构建分布式系统的框架          |
-| Nacos                | 2.0.3       | 发现、配置和管理微服务           |
-| Spring Boot          | 2.1.9       | 容器+MVC框架              |
-| MybatisPlus          | 3.3.2       | ORM框架                 |
-| Swagger-UI           | 3.0.0       | 文档生产工具                |
-| knife4j              | 3.0.0       | 基于swagger更美观好用的文档UI   |
-| RabbitMq             | 3.7.14      | 消息队列                  |
-| Redis                | 6.0         | 分布式缓存                 |
-| MySQL                | 8.0         | 关系型数据库                |
-| easypoi              | 4.2.0       | 文档解析工具                |
-| Druid                | 1.2.4       | 数据库连接池                |
-| Lombok               | 1.18.6      | 简化对象封装工具              |
-| fastdfs              | 1.26.2      | 分布式文件系统               |
-| flyway               | 5.2.4       | 数据库版本管理工具             |
-| hutool               | 5.5.7       | 常用工具类                 |
-| uid-generator        | 1.0.3       | 百度开源的唯一id生成器，雪花算法的升级版 |
-| minio                | 2021-06-17  | 文件服务器                 |
+| 技术                   | 版本             | 说明                    |
+| -------------------- | -------------- | --------------------- |
+| Spring Cloud         | Hoxton.SR12    | 快速构建分布式系统的框架          |
+| Spring Cloud Alibaba | 2.2.7.RELEASE  | 阿里巴巴快速构建分布式系统的框架      |
+| Nacos                | 2.0.3          | 发现、配置和管理微服务           |
+| Spring Boot          | 2.3.12.RELEASE | 容器+MVC框架              |
+| MybatisPlus          | 3.3.2          | ORM框架                 |
+| Swagger-UI           | 3.0.0          | 文档生产工具                |
+| knife4j              | 3.0.0          | 基于swagger更美观好用的文档UI   |
+| RabbitMq             | 3.7.14         | 消息队列                  |
+| Redis                | 6.0            | 分布式缓存                 |
+| MySQL                | 8.0            | 关系型数据库                |
+| easypoi              | 4.2.0          | 文档解析工具                |
+| Druid                | 1.2.4          | 数据库连接池                |
+| Lombok               | 1.18.6         | 简化对象封装工具              |
+| fastdfs              | 1.26.2         | 分布式文件系统               |
+| flyway               | 5.2.4          | 数据库版本管理工具             |
+| hutool               | 5.5.7          | 常用工具类                 |
+| uid-generator        | 1.0.3          | 百度开源的唯一id生成器，雪花算法的升级版 |
+| minio                | 2021-06-17     | 文件服务器                 |
 
 ## 计划与安排
 
@@ -59,37 +59,19 @@
 
 > 提供`reids`缓存操作
 
-```xml
-<dependency>
-    <groupId>com.sakura</groupId>
-    <artifactId>sakura-common</artifactId>
-    <version>1.0</version>
-</dependency>
-```
-
 引入此依赖后，在`controller`层使用此模块的`@RateLimiter`注解可实现限流
 
 ### sakura-common
 
 > 公共组件
 
-1. 加入依赖
-   
-   ```xml
-   <dependency>
-       <groupId>com.sakura</groupId>
-       <artifactId>sakura-common</artifactId>
-       <version>1.0</version>
-   </dependency>
-   ```
-
-2. 常用功能
+1. 常用功能
    
    - 日志打印
      
      在`controller`层的方法上，添加`@MyLog`注解，即可打印出请求的参数，方法，这个接口是否正常返回等日志信息
    
-   - aop结合`Guava`的`RateLimiter`实现限流
+   - aop结合`Guava`的`RateLimiter`实现单机限流
      
      在`controller`层的方法上，添加`@RateLimiter`注解，具体用法可参考[sakura-boot-demo/UserController.java](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/java/com/sakura/cloud/demo1/controller/UserController.java)类中的方法上的注解
    + 通用异常类，如`YErrorException`、`CloudException`等，用法如下
@@ -237,7 +219,7 @@
 
 > 集成了nacos，openfeign、gateway微服务组件
 
-+ feigin客户端（注意：使用时，需要在启动类上添加`@EnableFeignClients`注解）
++ feign客户端（注意：使用时，需要在启动类上添加`@EnableFeignClients`注解）
 
 ### sakura-mq
 
