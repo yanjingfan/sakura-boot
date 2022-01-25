@@ -34,6 +34,9 @@
 | sa-token                                | 待集成    |
 | Redis + Lua 脚本实现分布式限流                   | 已完成    |
 | Guava RateLimiter 实现单机版限流               | 已完成    |
+| ElasticSearch通用简单查询接口                   | 进行中    |
+
+
 
 ## 脚手架使用demo
 
