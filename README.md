@@ -26,16 +26,16 @@
 
 ## 计划与安排
 
-| 模块                                      | 集成开发进度 |
-| --------------------------------------- | ------ |
-| SpringCloud Security + Gateway + Oauth2 | 待集成    |
-| 微服务聚合swagger                            | 待集成    |
-| aop日志公共模块                               | 已完成    |
-| PowerJob分布式调度                           | 待集成    |
-| sa-token                                | 待集成    |
-| Redis + Lua 脚本实现分布式限流                   | 已完成    |
-| Guava RateLimiter 实现单机版限流               | 已完成    |
-| ElasticSearch通用简单查询模块                   | 已完成    |
+| 模块                             | 集成开发进度                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------- |
+| SpringCloud Security + Gateway | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
+| 微服务聚合swagger                   | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
+| aop日志公共模块                      | 已完成                                                                       |
+| PowerJob分布式调度                  | 待集成                                                                       |
+| sa-token                       | 待集成                                                                       |
+| Redis + Lua 脚本实现分布式限流          | 已完成                                                                       |
+| Guava RateLimiter 实现单机版限流      | 已完成                                                                       |
+| ElasticSearch通用简单查询模块          | 已完成                                                                       |
 
 ## 脚手架使用demo
 
@@ -229,7 +229,7 @@
 
 此模块需要新建消息内容和消息记录两张表，使用时引入`sakura-flyway`模块进行初始化，
 
-建表sql脚本为[V1_1__init_20210510.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-mq/src/main/resources/db/migration/V1_1__init_20210510.sql)
+建表sql脚本为[V2021010101__sakura-mq-1.0.0_初始化脚本.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021010101__sakura-mq-1.0.0_%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.sql)
 
 ### sakura-flyway
 
@@ -265,7 +265,7 @@
 
 使用此模块生成分布式id，需要先建一张记录表，每次重启项目都会生成一条记录
 
-建表sql脚本：[初始化脚本.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-uid-generator/src/main/resources/db/migration/V2021010102__sakura-uid-generator-1.0.0_%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.sql)
+建表sql脚本：[V2021010102__sakura-uid-generator-1.0.0_初始化脚本.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021010102__sakura-uid-generator-1.0.0_%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.sql)
 
 ### sukura-minio
 
@@ -277,7 +277,7 @@
 
 使用此模块，需要初始化一张任务记录表，记录任务的开启状态，cron表达式等等
 
-建表sql脚本：[初始化脚本.sql](https://github.com/yanjingfan/sakura-boot/blob/master/sakura-cron/src/main/resources/db/migration/V2021101801__sakura-cron-1.0.0_%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1.sql)
+建表sql脚本：[V2021101801__sakura-cron-1.0.0_动态定时任务.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021101801__sakura-cron-1.0.0_%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1.sql)
 
 ### sukura-es
 
