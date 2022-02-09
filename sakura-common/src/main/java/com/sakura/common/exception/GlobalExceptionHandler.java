@@ -35,49 +35,49 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public CommonResult IllegalArgumentException(HttpServletRequest request, HttpServletResponse response, IllegalArgumentException ex) {
+    public CommonResult<String> IllegalArgumentException(HttpServletRequest request, HttpServletResponse response, IllegalArgumentException ex) {
         log.error(ex.getMessage(), ex);
         return CommonResult.failed(ResultCode.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler({NoHandlerFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public CommonResult noHandlerFoundException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    public CommonResult<String> noHandlerFoundException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
         return CommonResult.failed(ResultCode.VALIDATE_FAILED, ex.getMessage());
     }
 
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult unknownException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    public CommonResult<String> unknownException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
         return CommonResult.failed(ResultCode.FAILED, "系统发生未知异常：" + ex.getMessage());
     }
 
     @ExceptionHandler({CloudException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult cloudException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    public CommonResult<String> cloudException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
         return CommonResult.failed(ResultCode.FAILED, ex.getMessage());
     }
 
     @ExceptionHandler({YErrorException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult yErrorException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    public CommonResult<String> yErrorException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
         return CommonResult.failed(ResultCode.FAILED, "系统错误：" + ex.getMessage());
     }
 
     @ExceptionHandler({YInfoException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult yInfoException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    public CommonResult<String> yInfoException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
         return CommonResult.failed(ResultCode.FAILED, "系统提示：" + ex.getMessage());
     }
 
     @ExceptionHandler({YWarmingException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult yWarmingException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    public CommonResult<String> yWarmingException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
         return CommonResult.failed(ResultCode.FAILED, "系统警告：" + ex.getMessage());
     }
