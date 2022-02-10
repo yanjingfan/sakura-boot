@@ -267,11 +267,11 @@
 
 建表sql脚本：[V2021010102__sakura-uid-generator-1.0.0_初始化脚本.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021010102__sakura-uid-generator-1.0.0_%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC.sql)
 
-### sukura-minio
+### sakura-minio
 
 > 集成了minio文件上传工具类
 
-### sukura-cron
+### sakura-cron
 
 > 动态定时器配置
 
@@ -279,6 +279,6 @@
 
 建表sql脚本：[V2021101801__sakura-cron-1.0.0_动态定时任务.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021101801__sakura-cron-1.0.0_%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1.sql)
 
-### sukura-es
+### sakura-es
 
 > ElasticSearch通用查询模块
