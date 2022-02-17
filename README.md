@@ -23,6 +23,7 @@
 | uid-generator        | 1.0.3          | 百度开源的唯一id生成器，雪花算法的升级版 |
 | minio                | 2021-06-17     | 文件服务器                 |
 | ElasticSearch        | 7.16.3         | 搜索引擎                  |
+| PowerJob             | 4.0.1          | 分布式调度                 |
 
 ## 计划与安排
 
@@ -31,7 +32,7 @@
 | SpringCloud Security + Gateway | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
 | 微服务聚合swagger                   | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
 | aop日志公共模块                      | 已完成                                                                       |
-| PowerJob分布式调度                  | 待集成                                                                       |
+| PowerJob分布式调度                  | 已集成                                                                       |
 | sa-token                       | 待集成                                                                       |
 | Redis + Lua 脚本实现分布式限流          | 已完成                                                                       |
 | Guava RateLimiter 实现单机版限流      | 已完成                                                                       |
@@ -275,9 +276,11 @@
 
 > 动态定时器配置
 
-使用此模块，需要初始化一张任务记录表，记录任务的开启状态，cron表达式等等
++ 使用单机调度时，需要初始化一张任务记录表，记录任务的开启状态，cron表达式等等
 
-建表sql脚本：[V2021101801__sakura-cron-1.0.0_动态定时任务.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021101801__sakura-cron-1.0.0_%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1.sql)
+        建表sql脚本：[V2021101801__sakura-cron-1.0.0_动态定时任务.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021101801__sakura-cron-1.0.0_%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1.sql)
+
++ 使用`PowerJob`分布式调度时，先看看官网使用文档：[PowerJob · 语雀 ](https://www.yuque.com/powerjob/guidence/intro)
 
 ### sakura-es
 

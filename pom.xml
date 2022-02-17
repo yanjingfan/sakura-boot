@@ -69,6 +69,7 @@
         <kotlin.version>1.3.72</kotlin.version>
         <!-- minio版本依赖结束 -->
         <p6spy.version>3.8.5</p6spy.version>
+        <powerjob.version>4.0.1</powerjob.version>
     </properties>
 
     <dependencies>
@@ -314,6 +315,13 @@
                 <version>${p6spy.version}</version>
             </dependency>
             <!-- sql打印 end -->
+
+            <!-- powerjob -->
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-worker-spring-boot-starter</artifactId>
+                <version>${powerjob.version}</version>
+            </dependency>
 
         </dependencies>
 
