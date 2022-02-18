@@ -6,7 +6,6 @@
 /.settings/
 /transaction-logs/
 .idea/
-/ly-cloud-base-service.iml
 /.apt_generated/
 /.factorypath
 /.factorypath

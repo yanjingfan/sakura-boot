@@ -27,16 +27,16 @@
 
 ## 计划与安排
 
-| 模块                             | 集成开发进度                                                                    |
-| ------------------------------ | ------------------------------------------------------------------------- |
-| SpringCloud Security + Gateway | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
-| 微服务聚合swagger                   | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
-| aop日志公共模块                      | 已完成                                                                       |
-| PowerJob分布式调度                  | 已集成                                                                       |
-| sa-token                       | 待集成                                                                       |
-| Redis + Lua 脚本实现分布式限流          | 已完成                                                                       |
-| Guava RateLimiter 实现单机版限流      | 已完成                                                                       |
-| ElasticSearch通用简单查询模块          | 已完成                                                                       |
+| 模块                        | 集成开发进度                                                                    |
+| ------------------------- | ------------------------------------------------------------------------- |
+| SpringCloud Gateway       | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
+| 微服务聚合swagger              | 已完成，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
+| aop日志公共模块                 | 已完成                                                                       |
+| PowerJob分布式调度             | 已集成                                                                       |
+| sa-token                  | 待集成                                                                       |
+| Redis + Lua 脚本实现分布式限流     | 已完成                                                                       |
+| Guava RateLimiter 实现单机版限流 | 已完成                                                                       |
+| ElasticSearch通用简单查询模块     | 已完成                                                                       |
 
 ## 脚手架使用demo
 
