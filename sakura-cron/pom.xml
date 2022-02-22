@@ -37,10 +37,10 @@
         </dependency>
 
         <!-- 不使用分布式调度powerjob，可将此依赖去掉 -->
-        <dependency>
-            <groupId>tech.powerjob</groupId>
-            <artifactId>powerjob-worker-spring-boot-starter</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>tech.powerjob</groupId>-->
+<!--            <artifactId>powerjob-worker-spring-boot-starter</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
