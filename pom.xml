@@ -16,6 +16,7 @@
         <module>sakura-minio</module>
         <module>sakura-cron</module>
         <module>sakura-es</module>
+        <module>sakura-websocket</module>
     </modules>
 
     <parent>
