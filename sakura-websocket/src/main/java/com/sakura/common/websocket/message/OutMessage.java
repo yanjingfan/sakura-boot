@@ -1,8 +1,9 @@
 package com.sakura.common.websocket.message;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 发送的消息
@@ -21,7 +22,9 @@ public class OutMessage<T> {
 
     private T content;
 
-    private Date time = new Date();
+    //传到前台的时间格式
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private LocalDateTime time = LocalDateTime.now();
 
     public OutMessage(T content) {
         this.content = content;

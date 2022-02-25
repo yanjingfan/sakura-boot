@@ -32,7 +32,7 @@ public class WebSocketService {
          * 中的configureMessageBroker方法修改默认前缀，这里改成了/queue的前缀
          */
         log.info("点对点发送消息===============" + message.getTo());
-        template.convertAndSendToUser(message.getTo(),"/message", new OutMessage(message.getMsgType(), message.getContent()));
+        template.convertAndSendToUser(message.getTo(),"/message", new OutMessage<>(message.getMsgType(), message.getContent()));
     }
 
     /**
@@ -40,7 +40,7 @@ public class WebSocketService {
      */
     public void subscribe(InMessage message) {
         log.info("路由与内容===============" + message.getTo());
-        template.convertAndSend("/topic/" + message.getTo() + "/message", new OutMessage(message.getContent()));
+        template.convertAndSend("/topic/" + message.getTo() + "/message", new OutMessage<>(message.getContent()));
     }
 
     /**
