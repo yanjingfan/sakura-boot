@@ -43,7 +43,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
          */
         config.setApplicationDestinationPrefixes("/app");
 
-        //单播时，前缀为/queue
+        //单播时，默认前缀为/user，现修改为/queue
         config.setUserDestinationPrefix("/queue");
     }
 
