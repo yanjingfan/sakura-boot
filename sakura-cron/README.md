@@ -4,7 +4,7 @@
 
 
 
-## 详细介绍
+## 单机动态定时
 
 **注意**：使用此模块时，需要先初始化sql脚本：[V2021101801__sakura-cron-1.0.0_动态定时任务.sql](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/resources/db/migration/V2021101801__sakura-cron-1.0.0_%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1.sql)
 

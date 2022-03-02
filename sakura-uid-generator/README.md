@@ -4,7 +4,7 @@
 
 ## 
 
-## 详细介绍
+## 分布式Id
 
 > 基于百度的开源分布式ID生成器 [baidu/uid-generator](https://github.com/baidu/uid-generator)
 
