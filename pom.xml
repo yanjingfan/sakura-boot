@@ -48,7 +48,8 @@
         <commons-collections.version>3.2.2</commons-collections.version>
         <easypoi.version>4.2.0</easypoi.version>
         <druid.version>1.2.4</druid.version>
-        <mybatis-plus.version>3.3.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <velocity.version>2.0</velocity.version>
         <service-authority.version>1.0.24</service-authority.version>
         <spring-plugin-core.version>2.0.0.RELEASE</spring-plugin-core.version>
         <spring-plugin-metadata.version>2.0.0.RELEASE</spring-plugin-metadata.version>
@@ -180,6 +181,18 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
             </dependency>
 
             <!-- Swagger3开始 -->

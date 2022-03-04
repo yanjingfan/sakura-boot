@@ -1,10 +1,10 @@
 package com.sakura.common.db.config;
 
-import com.baomidou.mybatisplus.core.parser.ISqlParser;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.sakura.common.db.condition.ConditionOnMissingTenantProperty;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
@@ -18,8 +18,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @auther YangFan
@@ -38,37 +36,28 @@ public class MybatisPlusConfig {
     private HttpServletRequest request;
 
     /**
-     * 分页
-     * @return
+     * 新的分页插件,一缓和二缓遵循mybatis的规则,需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存出现问题(该属性会在旧插件移除后一同移除)
      */
     @Conditional(ConditionOnMissingTenantProperty.class)
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false
-        // paginationInterceptor.setOverflow(false);
-        // 设置最大单页限制数量，默认 500 条，-1 不受限制
-        // paginationInterceptor.setLimit(500);
-        // 开启 count 的 join 优化,只针对部分 left join
-        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
-        return paginationInterceptor;
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));//默认为Mysql
+        return interceptor;
     }
 
-
     /**
-     * 分页
-     * 
+     * 多租户分页
      * @return
      */
     @ConditionalOnProperty(prefix = "tenant", name = "column")
     @Bean
-    public PaginationInterceptor tenantPaginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        List<ISqlParser> sqlParserList = new ArrayList<>();
-        TenantSqlParser tenantSqlParser = new TenantSqlParser();
-        tenantSqlParser.setTenantHandler(new TenantHandler() {
+    public MybatisPlusInterceptor tenantPaginationInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        TenantLineInnerInterceptor tenantInnerInterceptor = new TenantLineInnerInterceptor();
+        tenantInnerInterceptor.setTenantLineHandler(new TenantLineHandler() {
             @Override
-            public Expression getTenantId(boolean select) {
+            public Expression getTenantId() {
                 //return new LongValue(Long.parseLong(environment.getProperty("tenant.id")));
                 // 可将租户id和租户字段放置在请求头中
                 try {
@@ -90,26 +79,91 @@ public class MybatisPlusConfig {
             }
 
             @Override
-            public boolean doTableFilter(String tableName) {
-                // 这里可以判断是否过滤表
-                // if ("user".equals(tableName)) {
-                //    return true;
-                // }
+            public boolean ignoreTable(String tableName) {
+                //忽略uid-generator模块相关表
                 if ("worker_node".equalsIgnoreCase(tableName)) {
                     return true;
                 }
                 return false;
             }
         });
-        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false
-        // paginationInterceptor.setOverflow(false);
-        // 设置最大单页限制数量，默认 500 条，-1 不受限制
-        // paginationInterceptor.setLimit(500);
-        // 开启 count 的 join 优化,只针对部分 left join
-        sqlParserList.add(tenantSqlParser);
-        paginationInterceptor.setSqlParserList(sqlParserList);
-        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
-        return paginationInterceptor;
+        interceptor.addInnerInterceptor(tenantInnerInterceptor);
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
     }
+
+    /**
+     * 分页
+     * @return
+     */
+//    @Conditional(ConditionOnMissingTenantProperty.class)
+//    @Bean
+//    public PaginationInterceptor paginationInterceptor() {
+//        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+//        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false
+//        // paginationInterceptor.setOverflow(false);
+//        // 设置最大单页限制数量，默认 500 条，-1 不受限制
+//        // paginationInterceptor.setLimit(500);
+//        // 开启 count 的 join 优化,只针对部分 left join
+//        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
+//        return paginationInterceptor;
+//    }
+
+    /**
+     * 分页
+     * 
+     * @return
+     */
+//    @ConditionalOnProperty(prefix = "tenant", name = "column")
+//    @Bean
+//    public PaginationInterceptor tenantPaginationInterceptor() {
+//        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+//        List<ISqlParser> sqlParserList = new ArrayList<>();
+//        TenantSqlParser tenantSqlParser = new TenantSqlParser();
+//        tenantSqlParser.setTenantHandler(new TenantHandler() {
+//            @Override
+//            public Expression getTenantId(boolean select) {
+//                //return new LongValue(Long.parseLong(environment.getProperty("tenant.id")));
+//                // 可将租户id和租户字段放置在请求头中
+//                try {
+//                    String tenantId = request.getHeader("tenantId");
+//                    if (tenantId == null || "".equals(tenantId.trim())) {
+//                        return new LongValue(-1);
+//                    }
+//                    return new LongValue(Long.parseLong(tenantId));
+//                } catch (Exception e) {
+//                    return new LongValue(-1);
+//                }
+//            }
+//
+//            @Override
+//            public String getTenantIdColumn() {
+//                return environment.getProperty("tenant.column");
+//                // 可将租户id和租户字段放置在请求头中
+//                //return request.getHeader("tenantColumn");
+//            }
+//
+//            @Override
+//            public boolean doTableFilter(String tableName) {
+//                // 这里可以判断是否过滤表
+//                // if ("user".equals(tableName)) {
+//                //    return true;
+//                // }
+//                if ("worker_node".equalsIgnoreCase(tableName)) {
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false
+//        // paginationInterceptor.setOverflow(false);
+//        // 设置最大单页限制数量，默认 500 条，-1 不受限制
+//        // paginationInterceptor.setLimit(500);
+//        // 开启 count 的 join 优化,只针对部分 left join
+//        sqlParserList.add(tenantSqlParser);
+//        paginationInterceptor.setSqlParserList(sqlParserList);
+//        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
+//        return paginationInterceptor;
+//    }
 
 }
