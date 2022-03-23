@@ -1,5 +1,6 @@
 package com.sakura.common.websocket.service;
 
+import com.sakura.common.websocket.config.WebSocketConfig;
 import com.sakura.common.websocket.message.ContentMessage;
 import com.sakura.common.websocket.message.InMessage;
 import com.sakura.common.websocket.message.OutMessage;
@@ -28,7 +29,7 @@ public class WebSocketService {
         /**
          * 发送路径除了固定的路径 还拼接了特定的接收用户的标识（一般为用户id）
          *
-         * 默认前缀为/user + message.getTo() + /message，可以在com.sakura.common.websocket.config.WebSocketConfig配置类
+         * 默认前缀为/user + message.getTo() + /message，可以在{@link WebSocketConfig}
          * 中的configureMessageBroker方法修改默认前缀，这里改成了/queue的前缀
          */
         log.info("点对点发送消息===============" + message.getTo());
