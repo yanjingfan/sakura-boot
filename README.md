@@ -5,7 +5,6 @@
 | 模块名称                 | 模块说明                                                                          |
 |:--------------------:|:-----------------------------------------------------------------------------:|
 | SpringCloud Gateway  | demo示例中，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
-| 微服务聚合swagger         | demo示例中，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
 | sakura-cache         | 提供`reids`操作工具类，分布式限流注解                                                        |
 | sakura-common        | 公共通用组件，如自定义日志打印注解、单机限流注解、hutool包、excel操作工具类，apache-commons相关包、通用异常、公共返回类      |
 | sakura-web           | web相关，sql盲注处理，MybatisPlus配置，动态修改日志等级接口，swagger+knife4j配置                      |
