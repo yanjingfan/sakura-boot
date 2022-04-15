@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * @auther yangfan
  * @date 2022/4/13
- * @describle 时间参数统一处理
+ * @describle 时间参数统一处理 参考文档：https://juejin.cn/post/6844904083388792839
  */
 @JsonSerialize(using = DateJsonSerializer.class)
 @JsonDeserialize(using = DateJsonDeserializer.class)
