@@ -43,17 +43,17 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
 
         String method = request.getMethod();
 
-        //请求头参数拦截过滤
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while(headerNames.hasMoreElements()){
-            String name = headerNames.nextElement();
-            if (legalHeader(name)) {
-                continue;
-            }
-            String header = request.getHeader(name);
-            //sql注入直接拦截
-            if (sqlValidate(response, header)) return false;
-        }
+        //请求头参数拦截过滤，请求头一般放个token就行了，不会到mysql数据库层面，所以暂不做拦截
+//        Enumeration<String> headerNames = request.getHeaderNames();
+//        while(headerNames.hasMoreElements()){
+//            String name = headerNames.nextElement();
+//            if (legalHeader(name)) {
+//                continue;
+//            }
+//            String header = request.getHeader(name);
+//            //sql注入直接拦截
+//            if (sqlValidate(response, header)) return false;
+//        }
 
         //url参数拦截过滤
         Enumeration<String> names = request.getParameterNames();
@@ -80,8 +80,7 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    private boolean legalHeader(String name) {
-        String headerName = name.toLowerCase();
+    private boolean legalHeader(String headerName) {
         if ("accept".equals(headerName) || "cache-control".equals(headerName) || "content-type".equals(headerName)
                 || "host".equals(headerName) || "connection".equals(headerName) || "user-agent".equals(headerName)
                 || "content-length".equals(headerName) || "accept-encoding".equals(headerName)) {
