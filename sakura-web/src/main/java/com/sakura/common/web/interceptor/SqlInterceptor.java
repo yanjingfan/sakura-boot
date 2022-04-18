@@ -43,6 +43,19 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
 
         String method = request.getMethod();
 
+        //请求头参数拦截过滤
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while(headerNames.hasMoreElements()){
+            String name = headerNames.nextElement();
+            if (legalHeader(name)) {
+                continue;
+            }
+            String header = request.getHeader(name);
+            //sql注入直接拦截
+            if (sqlValidate(response, header)) return false;
+        }
+
+        //url参数拦截过滤
         Enumeration<String> names = request.getParameterNames();
         while(names.hasMoreElements()){
             String name = names.nextElement();
@@ -53,6 +66,7 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
+        //表单和Payload请求参数拦截
         if("POST".equals(method)){
             SQLInjectionHttpServletRequestWrapper wrapper = new SQLInjectionHttpServletRequestWrapper(request);
             String requestBody = wrapper.getRequestBodyParame();
@@ -66,10 +80,20 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
+    private boolean legalHeader(String name) {
+        String headerName = name.toLowerCase();
+        if ("accept".equals(headerName) || "cache-control".equals(headerName) || "content-type".equals(headerName)
+                || "host".equals(headerName) || "connection".equals(headerName) || "user-agent".equals(headerName)
+                || "content-length".equals(headerName) || "accept-encoding".equals(headerName)) {
+            return true;
+        }
+        return false;
+    }
+
     private boolean sqlValidate(HttpServletResponse response, String requestBody) throws IOException {
         if(sqlInject(requestBody)){
-            response.setContentType("text/html; charset=utf-8");
-            String jsonStr = "{\"code\":591,\"message\":\"请求参数含有非法字符!\",\"data\":\"null\"}";
+            response.setContentType("application/json; charset=utf-8");
+            String jsonStr = "{\"code\":591,\"message\":\"请求参数含有非法字符："+requestBody+"\",\"data\":\"null\"}";
             response.getWriter().write(jsonStr);
             response.setStatus(591);
             return true;
