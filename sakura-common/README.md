@@ -9,6 +9,10 @@
 + 日志打印
   
   在`controller`层的方法上，添加`@MyLog`注解，即可打印出请求的参数，方法，这个接口是否正常返回等日志信息
+
++ 时间格式参数统一处理
+  
+  在`controller`层方法中接收时间参数时，无需添加`@DateTimeFormat`、`@JsonFormat/@JSONField`注解，`DateHandlerConfig`类统一处理
 - aop结合`Guava`的`RateLimiter`实现单机限流
   
   在`controller`层的方法上，添加`@RateLimiter`注解，具体用法可参考[sakura-boot-demo/UserController.java](https://github.com/yanjingfan/sakura-boot-demo/blob/master/web/src/main/java/com/sakura/cloud/demo1/controller/UserController.java)类中的方法上的注解
