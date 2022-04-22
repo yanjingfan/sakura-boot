@@ -45,8 +45,6 @@ public class SqlInjectFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-
-
         String ContentType = request.getHeader("Content-Type");
         if (request.getParameterMap().entrySet().size() > 0 || ContentType != null
                 && ContentType.contains("application/json")) {
