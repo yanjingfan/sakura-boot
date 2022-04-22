@@ -55,7 +55,7 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
 //            if (sqlValidate(response, header)) return false;
 //        }
 
-        //url参数拦截过滤
+        //get请求和表单请求参数拦截
         Enumeration<String> names = request.getParameterNames();
         while(names.hasMoreElements()){
             String name = names.nextElement();
@@ -66,7 +66,7 @@ public class SqlInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        //表单和Payload请求参数拦截
+        //Payload请求参数拦截(讲人话就是使用了json传参，后台使用@RequestBody接收参数)
         if("POST".equals(method)){
             SQLInjectionHttpServletRequestWrapper wrapper = new SQLInjectionHttpServletRequestWrapper(request);
             String requestBody = wrapper.getRequestBodyParame();
