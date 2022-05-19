@@ -36,24 +36,34 @@ public class FilterInfo {
     private String rangeFiled;
 
     /**
+     * 范围查询字段的类型，是否为字符串类型，默认为数值类
+     */
+    private Boolean rangeIsStr = false;
+
+    /**
+     * 范围查询开始
+     */
+    private String start;
+
+    /**
+     * 范围查询结束
+     */
+    private String end;
+
+    /**
      * 排序字段
      */
     private String sortFiled;
 
     /**
+     * 排序字段的类型，是否为字符串类型，默认为数值类
+     */
+    private Boolean sortIsStr = false;
+
+    /**
      * 排序方式、默认降序
      */
     private String sortMethod = "desc";
-
-    /**
-     * 开始时间
-     */
-    private Long startTime;
-
-    /**
-     * 结束时间
-     */
-    private Long endTime;
 
     /**
      * 分页数
