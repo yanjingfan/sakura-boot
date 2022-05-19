@@ -28,6 +28,8 @@ public class ESTemplate {
     @Value("${spring.elasticsearch.rest.uris}")
     private String ESurl;
 
+    @Deprecated
+    //过期不能用，此方法搜索结果不正确，请使用postObjectString方法
     //GET /login_log-2020.06.17/_search?_source=user_name,temp_duration&sort=temp_duration:asc&q=user_name:admin&q=temp_duration:[140 TO *]
     public String getObjectString(FilterInfo filterInfo) {
         String indexName = filterInfo.getIndexName();
