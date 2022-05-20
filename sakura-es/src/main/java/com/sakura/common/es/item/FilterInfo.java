@@ -19,14 +19,12 @@ public class FilterInfo {
     private String indexName;
 
     /**
-     * 查询字段(如sql中的select field1,filed2 form xxx)
-     * 参数形式：field1,filed2
+     * 查询的字段(如sql中的select field1,filed2 form xxx)
      */
     private List<String> selectFields;
 
     /**
      * 搜索字段（如sql中的select * from xxx where key1 like '%value1%'）
-     * 参数拼接样式：key1:value1,key2:value2
      */
     private List<QueryField> queryFields;
 
