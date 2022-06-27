@@ -28,7 +28,7 @@
 
     <properties>
         <!-- log4j2漏洞原因，升级到最新安全版本 -->
-        <log4j2.version>2.17.0</log4j2.version>
+        <log4j2.version>2.17.2</log4j2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -359,12 +359,12 @@
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://192.168.1.113:8081/nexus/repository/maven-releases/</url>
+            <url>http://192.168.10.113:8081/nexus/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://192.168.1.113:8081/nexus/repository/maven-snapshots/</url>
+            <url>http://192.168.10.113:8081/nexus/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
