@@ -17,6 +17,8 @@
         <module>sakura-cron</module>
         <module>sakura-es</module>
         <module>sakura-websocket</module>
+        <module>sakura-seata</module>
+        <module>sakura-oauth2</module>
     </modules>
 
     <groupId>com.sakura</groupId>
