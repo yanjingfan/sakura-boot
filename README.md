@@ -2,22 +2,23 @@
 
 ## 模块介绍
 
-| 模块名称                 | 模块说明                                                                          |
-|:--------------------:|:-----------------------------------------------------------------------------:|
-| SpringCloud Gateway  | demo示例中，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
-| sakura-cache         | 提供`reids`操作工具类，分布式限流注解                                                        |
-| sakura-common        | 公共通用组件，如自定义日志打印注解、单机限流注解、hutool包、excel操作工具类，apache-commons相关包、通用异常、公共返回类      |
-| sakura-web           | web相关，sql盲注处理，MybatisPlus配置，动态修改日志等级接口，swagger+knife4j配置                      |
-| sakura-db            | 数据库相关依赖，mysql连接依赖、MybatisPlus依赖、jpa依赖                                         |
-| sakura-ms            | nacos、openfeign、discovery SpringCloud组件                                       |
-| sakura-mq            | 基于rabbitmq的通用消息发布组件                                                           |
-| sakura-flyway        | 初始化数据库，支持数据库脚本的版本管理                                                           |
-| sakura-file-util     | fastdfs文件上传下载                                                                 |
-| sakura-uid-generator | 分布式id                                                                         |
-| sakura-minio         | minio文件操作                                                                     |
-| sakura-cron          | 单机动态定时器配置                                                                     |
-| sakura-es            | ElasticSearch通用查询模块                                                           |
-| sakura-webSocket     | webSocket组件                                                                   |
+| 模块名称                 | 模块说明                                                                                    |
+|:--------------------:|:---------------------------------------------------------------------------------------:|
+| SpringCloud Gateway  | 不使用sakura-boot脚手架，可查看[sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo) |
+| sakura-cache         | 提供`reids`操作工具类，分布式限流注解                                                                  |
+| sakura-common        | 公共通用组件，如自定义日志打印注解、单机限流注解、hutool包、excel操作工具类，apache-commons相关包、通用异常、公共返回类                |
+| sakura-web           | web相关，sql盲注处理，MybatisPlus配置，动态修改日志等级接口，swagger+knife4j配置                                |
+| sakura-db            | 数据库相关依赖，mysql连接依赖、MybatisPlus依赖、jpa依赖                                                   |
+| sakura-ms            | nacos、seata、openfeign、discovery SpringCloud组件                                           |
+| sakura-oauth2        | 认证组件                                                                                    |
+| sakura-mq            | 基于rabbitmq的通用消息发布组件                                                                     |
+| sakura-flyway        | 初始化数据库，支持数据库脚本的版本管理                                                                     |
+| sakura-file-util     | fastdfs文件上传下载                                                                           |
+| sakura-uid-generator | 分布式id                                                                                   |
+| sakura-minio         | minio文件操作                                                                               |
+| sakura-cron          | 单机动态定时器配置                                                                               |
+| sakura-es            | ElasticSearch通用查询模块                                                                     |
+| sakura-webSocket     | webSocket组件                                                                             |
 
 ## 脚手架使用demo
 
@@ -29,6 +30,7 @@
 | ------------------------------------------------------------------------------------------------------- | -------------- | --------------------- |
 | [Spring Cloud](https://spring.io/projects/spring-cloud)                                                 | Hoxton.SR12    | 快速构建分布式系统的框架          |
 | [Spring Cloud Alibaba](https://spring.io/projects/spring-cloud-alibaba)                                 | 2.2.7.RELEASE  | 阿里巴巴快速构建分布式系统的框架      |
+| [Spring Security+OAuth2](https://spring.io/projects/spring-authorization-server)                        |                | 安全认证框架（官方已不再维护，有点难受）  |
 | [Nacos](https://nacos.io/zh-cn/docs/quick-start.html)                                                   | 2.0.3          | 发现、配置和管理微服务           |
 | [Spring Boot](https://spring.io/projects/spring-boot)                                                   | 2.3.12.RELEASE | 容器+MVC框架              |
 | [MybatisPlus](https://baomidou.com/)                                                                    | 3.3.2          | ORM框架                 |
