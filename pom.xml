@@ -17,6 +17,8 @@
         <module>sakura-cron</module>
         <module>sakura-es</module>
         <module>sakura-websocket</module>
+        <module>sakura-seata</module>
+        <module>sakura-oauth2</module>
     </modules>
 
     <groupId>com.sakura</groupId>
@@ -28,7 +30,7 @@
 
     <properties>
         <!-- log4j2漏洞原因，升级到最新安全版本 -->
-        <log4j2.version>2.17.0</log4j2.version>
+        <log4j2.version>2.17.2</log4j2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -37,7 +39,7 @@
 
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
-        <spring-cloud-alibaba.version>2.2.7.RELEASE</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba.version>2.2.8.RELEASE</spring-cloud-alibaba.version>
         <fastjson.version>2.0.1</fastjson.version>
         <commons-io.version>2.7</commons-io.version>
         <commons-lang3.version>3.11</commons-lang3.version>
@@ -71,6 +73,7 @@
         <!-- minio版本依赖结束 -->
         <p6spy.version>3.8.5</p6spy.version>
         <powerjob.version>4.0.1</powerjob.version>
+        <nimbus.version>8.16</nimbus.version>
     </properties>
 
     <dependencies>
@@ -351,6 +354,13 @@
                 <version>${powerjob.version}</version>
             </dependency>
 
+            <!-- nimbus-jose-jwt -->
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus.version}</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>
@@ -359,12 +369,12 @@
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://192.168.1.113:8081/nexus/repository/maven-releases/</url>
+            <url>http://192.168.10.113:8081/nexus/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://192.168.1.113:8081/nexus/repository/maven-snapshots/</url>
+            <url>http://192.168.10.113:8081/nexus/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
