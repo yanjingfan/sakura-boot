@@ -73,6 +73,7 @@
         <!-- minio版本依赖结束 -->
         <p6spy.version>3.8.5</p6spy.version>
         <powerjob.version>4.0.1</powerjob.version>
+        <nimbus.version>8.16</nimbus.version>
     </properties>
 
     <dependencies>
@@ -351,6 +352,13 @@
                 <groupId>tech.powerjob</groupId>
                 <artifactId>powerjob-worker-spring-boot-starter</artifactId>
                 <version>${powerjob.version}</version>
+            </dependency>
+
+            <!-- nimbus-jose-jwt -->
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus.version}</version>
             </dependency>
 
         </dependencies>
