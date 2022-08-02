@@ -9,7 +9,7 @@
     </parent> 
     
     <modelVersion>4.0.0</modelVersion>
-	<groupId>com.sakura.loki</groupId>
+	<groupId>com.sakura</groupId>
     <artifactId>sakura-loki</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
