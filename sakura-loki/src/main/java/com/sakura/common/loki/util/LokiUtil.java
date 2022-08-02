@@ -1,5 +1,15 @@
 package com.sakura.common.loki.util;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
+import com.sakura.common.loki.exception.LokiException;
+import com.sakura.common.loki.item.FilterInfo;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.springframework.util.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -9,18 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang.StringUtils;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.sakura.common.loki.exception.LokiException;
-import com.sakura.common.loki.item.FilterInfo;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class LokiUtil {
 	public static JSONObject get(String url) {
@@ -129,7 +127,7 @@ public class LokiUtil {
 		try {
 			Long localDateTimeSize=null;
 			// 只接受long型范围查询
-			if (StringUtils.isNotBlank(time)) {
+			if (!StringUtils.isEmpty(time)) {
 				DateTimeFormatter dateTimeFormatters = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				LocalDateTime localDateTime = LocalDateTime.parse(time,dateTimeFormatters);
 				localDateTimeSize=localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
@@ -158,7 +156,7 @@ public class LokiUtil {
 			        	for (int z = 0; z < source1.size(); z++) {
 			        		if(z==1) {
 			        			//包含某些字段直接输出
-			        			if(StringUtils.isNotBlank(wordFields)) {
+			        			if(!StringUtils.isEmpty(wordFields)) {
 			        				if(wordFields.indexOf("info")!=-1||wordFields.indexOf("warn")!=-1||wordFields.indexOf("debug")!=-1||wordFields.indexOf("error")!=-1) {
 				        				String v=source1.get(z).toString();
 				        				list.add(v);
@@ -183,7 +181,7 @@ public class LokiUtil {
 			        	
 			        }
 			    }
-			  if(StringUtils.isBlank(wordFields)) {
+			  if(!StringUtils.isEmpty(wordFields)) {
 				//排序
 				list=lokiListSort(list,filterInfo);
 			  }
