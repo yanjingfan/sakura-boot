@@ -1,20 +1,18 @@
 package com.sakura.common.loki;
 
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.sakura.common.loki.exception.LokiException;
 import com.sakura.common.loki.item.FilterInfo;
 import com.sakura.common.loki.item.QueryField;
 import com.sakura.common.loki.util.LokiUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -48,14 +46,14 @@ public class LokiTemplate {
 				//是否开启了只用Loki的语言来查询数据
 				//否则的话就可以使用另一种查询方式
 				if(lokiQLFaucet) {
-					if(StringUtils.isNotBlank(lokiQL)) {
+					if(!StringUtils.isEmpty(lokiQL)) {
 						sb.append("&query=");
 						sb.append(URLEncoder.encode(lokiQL));
 					}
 				}else {
 				
 				// 查询job {job="log-access"}
-				if (StringUtils.isNotBlank(jobName)) {
+				if (!StringUtils.isEmpty(jobName)) {
 					StringBuilder lokiQLString = new StringBuilder();
 					sb.append("&query=");
 					// label精准查询
@@ -79,12 +77,12 @@ public class LokiTemplate {
 				}
 				
 				// 只接受long型范围查询
-				if (StringUtils.isNotBlank(start)) {
+				if (!StringUtils.isEmpty(start)) {
 					Long startTimeSize=LokiUtil.getDateLong(start);
 					sb.append("&start=");
 					sb.append(startTimeSize*1000000);
 				}
-				if (StringUtils.isNotBlank(end)) {
+				if (!StringUtils.isEmpty(end)) {
 					Long endTimeSize=LokiUtil.getDateLong(end);
 					sb.append("&end=");
 					sb.append(endTimeSize*1000000);
