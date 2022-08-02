@@ -23,7 +23,7 @@ public class LokiTemplate {
     @Value("${spring.loki.url}")
     private String Lokiurl;
 
-    public Object searchLokiLogByFilters(FilterInfo filterInfo) {
+    public List<Object> searchLokiLogByFilters(FilterInfo filterInfo) {
 		try {
 			// 查询loki日志
 			if (filterInfo != null) {
