@@ -5,8 +5,7 @@ import lombok.*;
 import java.util.List;
 
 /**
- * 用户信息类
- * Created by macro on 2020/6/19.
+ * 用户信息类，在sa-token示例模块需要用到此类
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
