@@ -75,7 +75,6 @@
         <p6spy.version>3.8.5</p6spy.version>
         <powerjob.version>4.0.1</powerjob.version>
         <nimbus.version>8.16</nimbus.version>
-        <okhttp.version>3.10.0</okhttp.version>
     </properties>
 
     <dependencies>
