@@ -77,6 +77,7 @@
         <powerjob.version>4.0.1</powerjob.version>
         <nimbus.version>8.16</nimbus.version>
         <sa-token.version>1.30.0</sa-token.version>
+        <bootstrap.version>3.1.2</bootstrap.version>
     </properties>
 
     <dependencies>
@@ -114,6 +115,12 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
+            </dependency>
 
             <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
             <dependency>
