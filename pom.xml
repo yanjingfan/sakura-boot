@@ -20,6 +20,7 @@
         <module>sakura-seata</module>
         <module>sakura-oauth2</module>
         <module>sakura-loki</module>
+        <module>sakura-sa-token</module>
     </modules>
 
     <groupId>com.sakura</groupId>
@@ -75,6 +76,7 @@
         <p6spy.version>3.8.5</p6spy.version>
         <powerjob.version>4.0.1</powerjob.version>
         <nimbus.version>8.16</nimbus.version>
+        <sa-token.version>1.30.0</sa-token.version>
     </properties>
 
     <dependencies>
@@ -112,6 +114,27 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
+            <!-- Sa-Token 权限认证 -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
+            <!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-dao-redis-jackson</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
 
             <!-- Spring Dependencies -->
             <dependency>
