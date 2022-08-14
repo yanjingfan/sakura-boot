@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
-    
-    
+
+
     //SQL注入拦截器
     @Bean
     public SqlInterceptor sqlInjectInterceptor () {

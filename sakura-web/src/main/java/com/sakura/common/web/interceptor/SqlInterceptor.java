@@ -2,11 +2,10 @@ package com.sakura.common.web.interceptor;
 
 import com.sakura.common.web.properties.WebSecurityProperties;
 import com.sakura.common.web.wrapper.SQLInjectionHttpServletRequestWrapper;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
