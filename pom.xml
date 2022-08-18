@@ -21,6 +21,7 @@
         <module>sakura-oauth2</module>
         <module>sakura-loki</module>
         <module>sakura-sa-token</module>
+        <module>sakura-gateway</module>
     </modules>
 
     <groupId>com.sakura</groupId>
