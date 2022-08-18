@@ -66,6 +66,13 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

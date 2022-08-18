@@ -1,6 +1,5 @@
 package com.sakura.common.cron;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -58,7 +57,7 @@ public class SysJobPO {
      */
     @Column(name = "create_time")
     //传到前台的时间格式
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     //传到后台的时间格式
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
@@ -67,7 +66,7 @@ public class SysJobPO {
      */
     @Column(name = "update_time")
     //传到前台的时间格式
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     //传到后台的时间格式
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
