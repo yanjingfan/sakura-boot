@@ -1,4 +1,4 @@
-package com.sakura.common.config.date;
+package com.sakura.common.web.config.date;
 
 import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
