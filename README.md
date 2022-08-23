@@ -51,7 +51,7 @@
 | [minio](https://docs.min.io/)                                                                           | 2021-06-17     | 文件服务器                 |
 | [ElasticSearch](https://www.elastic.co/guide/index.html)                                                | 7.16.3         | 搜索引擎                  |
 | [PowerJob](https://github.com/PowerJob/PowerJob)                                                        | 4.0.1          | 分布式调度                 |
-| [seata](https://seata.io/zh-cn/)                                                                        |                | 分布式框架                 |
+| [seata](https://seata.io/zh-cn/)                                                                        | 1.5.1          | 分布式框架                 |
 | [satoken](https://sa-token.dev33.cn/)                                                                   | 1.30.0         | 认证框架                  |
 | [loki](https://github.com/grafana/loki)                                                                 |                | 用来存储日志                |
 | [websocket](https://spring.io/guides/gs/messaging-stomp-websocket/)                                     |                | 支持双向通信的协议             |
