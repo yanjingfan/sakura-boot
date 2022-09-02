@@ -17,6 +17,7 @@ public class UserDTO {
     private String username;
     private String password;
     private String phone;
+    private String userType;//0-普通用户 1-管理员
     private String managementId;
     private String managementName;
     private List<String> permissionList;
