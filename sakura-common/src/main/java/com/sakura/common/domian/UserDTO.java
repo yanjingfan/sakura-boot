@@ -40,12 +40,12 @@ public class UserDTO {
     private List<MenuTreeBean> menuList;
 
     /**
-     * 资源
+     * 资源，控制菜单按钮的显示
      */
-    private List<String> resourceList;//控制菜单按钮的显示
+    private List<String> resourceList;
 
     /**
-     * 资源过滤
+     * 资源过滤，控制查询是否添加权限控制
      */
-    private List<String> filterList;//控制查询是否添加权限控制
+    private List<String> filterList;
 }
