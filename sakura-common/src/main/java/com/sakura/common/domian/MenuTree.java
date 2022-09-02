@@ -35,7 +35,7 @@ public class MenuTree {
     private String iconUrl;
 
     /**
-     * 是否显示，0：显示，1：不显示
+     * 是否显示，0：不显示，1：显示
      */
     private Integer show;
 
