@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 菜单实体类
+ * 菜单树类
  * created by xiaokun on 2022/9/2.
  */
 @Data
@@ -30,12 +30,12 @@ public class MenuTree {
     private String parentId;
 
     /**
-     *
+     *  图标url
      */
-    private String icon;
+    private String iconUrl;
 
     /**
-     * 是否显示，1：显示，0：不显示
+     * 是否显示，0：显示，1：不显示
      */
     private Integer show;
 

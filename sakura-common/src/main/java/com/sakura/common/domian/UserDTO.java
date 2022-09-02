@@ -39,12 +39,12 @@ public class UserDTO {
     /**
      * 部门ID
      */
-    private String managementId;
+    private String deptId;
 
     /**
      * 部门名称
      */
-    private String managementName;
+    private String deptName;
 
     private List<String> permissionList;
 
