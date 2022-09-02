@@ -17,5 +17,8 @@ public class UserDTO {
     private String username;
     private String password;
     private String phone;
+    private String managementId;
+    private String managementName;
     private List<String> permissionList;
+    private PremissonInfo premissonInfo;
 }
