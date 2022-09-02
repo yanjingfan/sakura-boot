@@ -37,15 +37,15 @@ public class UserDTO {
     /**
      * 菜单
      */
-    private List menuList;
+    private List<MenuTreeBean> menuList;
 
     /**
      * 资源
      */
-    private List<String> resourceList;
+    private List<String> resourceList;//控制菜单按钮的显示
 
     /**
      * 资源过滤
      */
-    private List<String> filterList;
+    private List<String> filterList;//控制查询是否添加权限控制
 }
