@@ -13,13 +13,39 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class UserDTO {
+
     private Long id;
+
     private String username;
-    private String password;
+    /**
+     * 密码
+     */
+    private String passwd;
+
     private String phone;
-    private String userType;//0-普通用户 1-管理员
+    /**
+     * 0-普通用户 1-管理员
+     */
+    private String userType;
+
     private String managementId;
+
     private String managementName;
+
     private List<String> permissionList;
-    private PremissonInfo premissonInfo;
+
+    /**
+     * 菜单
+     */
+    private List menuList;
+
+    /**
+     * 资源
+     */
+    private List<String> resourceList;
+
+    /**
+     * 资源过滤
+     */
+    private List<String> filterList;
 }
