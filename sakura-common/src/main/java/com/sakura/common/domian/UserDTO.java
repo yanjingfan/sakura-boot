@@ -46,9 +46,6 @@ public class UserDTO {
      */
     private String managementName;
 
-    /**
-     * 权限控制，查询接口会启用权限过滤
-     */
     private List<String> permissionList;
 
     /**
