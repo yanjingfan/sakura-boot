@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class MenuTreeBean {
     private String id;
-    private String name;
+    private String text;
     private String url;
     private String parentId;
     private List<MenuTreeBean> children = new ArrayList();

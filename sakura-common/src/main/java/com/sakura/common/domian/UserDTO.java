@@ -16,22 +16,39 @@ public class UserDTO {
 
     private Long id;
 
+    /**
+     * 姓名
+     */
     private String username;
+
     /**
      * 密码
      */
     private String passwd;
 
+    /**
+     * 手机号
+     */
     private String phone;
+
     /**
      * 0-普通用户 1-管理员
      */
     private String userType;
 
+    /**
+     * 部门ID
+     */
     private String managementId;
 
+    /**
+     * 部门名称
+     */
     private String managementName;
 
+    /**
+     * 权限控制，查询接口会启用权限过滤
+     */
     private List<String> permissionList;
 
     /**
