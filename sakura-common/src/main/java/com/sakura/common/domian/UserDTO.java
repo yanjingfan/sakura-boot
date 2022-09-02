@@ -51,7 +51,7 @@ public class UserDTO {
     /**
      * 菜单
      */
-    private List<MenuTreeBean> menuList;
+    private List<MenuTree> menuList;
 
     /**
      * 资源，控制菜单按钮的显示
