@@ -20,9 +20,9 @@ public class MenuTree {
     private String menuName;
 
     /**
-     * 菜单图片url
+     * 菜单url
      */
-    private String iconUrl;
+    private String url;
 
     /**
      * 父id
@@ -30,12 +30,17 @@ public class MenuTree {
     private String parentId;
 
     /**
-     * 子菜单集合
+     *
      */
-    private List<MenuTree> children = new ArrayList();
+    private String icon;
 
     /**
      * 是否显示，1：显示，0：不显示
      */
     private Integer show;
+
+    /**
+     * 子菜单集合
+     */
+    private List<MenuTree> children = new ArrayList();
 }
