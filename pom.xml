@@ -44,6 +44,7 @@
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.8.RELEASE</spring-cloud-alibaba.version>
         <fastjson.version>2.0.1</fastjson.version>
+        <jackson.version>2.13.4</jackson.version>
         <commons-io.version>2.7</commons-io.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <commons-codec.version>1.15</commons-codec.version>
@@ -170,6 +171,13 @@
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
 
             <!-- commons -->
