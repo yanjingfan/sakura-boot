@@ -2,7 +2,9 @@ package com.sakura.common.domian;
 
 import lombok.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
@@ -21,13 +23,13 @@ public class UserDTO {
     /**
      * 姓名
      */
-    @NotEmpty
+    @NotBlank(message = "姓名不能为空")
     private String username;
 
     /**
      * 密码
      */
-    @NotEmpty
+    @NotBlank(message = "密码不能为空")
     private String passwd;
 
     /**
@@ -38,7 +40,8 @@ public class UserDTO {
     /**
      * 邮箱
      */
-    @Email
+//    @Valid
+//    @Email
     private String email;
 
     /**
