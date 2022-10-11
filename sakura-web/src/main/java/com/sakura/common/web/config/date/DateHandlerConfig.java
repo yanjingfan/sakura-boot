@@ -144,6 +144,8 @@ public class DateHandlerConfig {
         });
 
         objectMapper.registerModule(javaTimeModule);
+        // 允许前端传多余的参数
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper;
     }
 }
