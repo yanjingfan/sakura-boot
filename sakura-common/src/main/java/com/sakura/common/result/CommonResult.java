@@ -104,6 +104,14 @@ public class CommonResult<T> {
     }
 
     /**
+     * 登录失败返回结果
+     * @param message 提示信息
+     */
+    public static <T> CommonResult<T> unauthorized(String message) {
+        return new CommonResult<>(ResultCode.UNAUTHORIZED.getCode(), message, null);
+    }
+
+    /**
      * 未登录返回结果
      */
     public static <T> CommonResult<T> unauthorized(T data) {
