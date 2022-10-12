@@ -18,8 +18,6 @@ import java.util.List;
 @Builder
 public class UserDTO {
 
-    private Long id;
-
     /**
      * 姓名
      */
