@@ -1,6 +1,7 @@
 package com.sakura.common.utils;
 
 import cn.hutool.core.io.FileTypeUtil;
+import com.sakura.common.exception.YWarmingException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,6 +25,10 @@ public class FileTypeUtils {
         try {
             inputStream = multipartFile.getInputStream();
             type = FileTypeUtil.getType(inputStream);
+            if (null == type) {
+                // 未成功识别类型，扩展名辅助识别
+                type = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".") + 1);
+            }
             System.out.println(type);
             if (type.equalsIgnoreCase("JPG") || type.equalsIgnoreCase("JPEG")
                     || type.equalsIgnoreCase("GIF") || type.equalsIgnoreCase("PNG")
@@ -59,6 +64,6 @@ public class FileTypeUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new YWarmingException("存在危险文件，不允许上传！");
     }
 }
