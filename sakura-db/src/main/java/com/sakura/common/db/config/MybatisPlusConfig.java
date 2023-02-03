@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.sakura.common.db.condition.ConditionOnMissingTenantProperty;
+import com.sakura.common.db.database.enums.DatabaseTypeEnum;
+import com.sakura.common.db.database.plugin.kingbase.KingbaseMybatisplusPlugin;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,6 +14,9 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * @auther YangFan
@@ -26,6 +31,9 @@ public class MybatisPlusConfig {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private DataSource dataSource;
+
 //    @Autowired
 //    private HttpServletRequest request;
 
@@ -36,7 +44,37 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));//默认为Mysql
+
+        // 默认使用mysql数据库
+        String databaseProductName = DatabaseTypeEnum.MYSQL.getDatabaseName().toLowerCase();
+        try {
+            databaseProductName = dataSource.getConnection().getMetaData().getDatabaseProductName().toLowerCase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // 获取数据库类型
+        DatabaseTypeEnum databaseType = DatabaseTypeEnum.getByDatabaseUrl(databaseProductName);
+        switch (databaseType) {
+            case KINGBASE: {
+                // KINGBASE 适配 Mybatis-Plus 时，由于 Mybatis-Plus 无法识别 KINGBASE 数据库类型， 故在相关配置中需将其配置成 postgresql，如：在使用分页插件时，配置方言类型为 postgresql
+                interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.POSTGRE_SQL));
+                // 添加适配人大金仓数据库转换拦截器
+                interceptor.addInnerInterceptor(new KingbaseMybatisplusPlugin());
+
+                break;
+            }
+            case DM_DBMS: {
+                interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.DM));
+                // TODO 添加适配达梦数据库转换拦截器
+//            interceptor.addInnerInterceptor(new DmMybatisplusPlugin());
+                break;
+            }
+            default: {
+                interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+                break;
+            }
+        }
+
         return interceptor;
     }
 
@@ -85,79 +123,5 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
-
-    /**
-     * 分页
-     * @return
-     */
-//    @Conditional(ConditionOnMissingTenantProperty.class)
-//    @Bean
-//    public PaginationInterceptor paginationInterceptor() {
-//        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-//        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false
-//        // paginationInterceptor.setOverflow(false);
-//        // 设置最大单页限制数量，默认 500 条，-1 不受限制
-//        // paginationInterceptor.setLimit(500);
-//        // 开启 count 的 join 优化,只针对部分 left join
-//        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
-//        return paginationInterceptor;
-//    }
-
-    /**
-     * 分页
-     * 
-     * @return
-     */
-//    @ConditionalOnProperty(prefix = "tenant", name = "column")
-//    @Bean
-//    public PaginationInterceptor tenantPaginationInterceptor() {
-//        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-//        List<ISqlParser> sqlParserList = new ArrayList<>();
-//        TenantSqlParser tenantSqlParser = new TenantSqlParser();
-//        tenantSqlParser.setTenantHandler(new TenantHandler() {
-//            @Override
-//            public Expression getTenantId(boolean select) {
-//                //return new LongValue(Long.parseLong(environment.getProperty("tenant.id")));
-//                // 可将租户id和租户字段放置在请求头中
-//                try {
-//                    String tenantId = request.getHeader("tenantId");
-//                    if (tenantId == null || "".equals(tenantId.trim())) {
-//                        return new LongValue(-1);
-//                    }
-//                    return new LongValue(Long.parseLong(tenantId));
-//                } catch (Exception e) {
-//                    return new LongValue(-1);
-//                }
-//            }
-//
-//            @Override
-//            public String getTenantIdColumn() {
-//                return environment.getProperty("tenant.column");
-//                // 可将租户id和租户字段放置在请求头中
-//                //return request.getHeader("tenantColumn");
-//            }
-//
-//            @Override
-//            public boolean doTableFilter(String tableName) {
-//                // 这里可以判断是否过滤表
-//                // if ("user".equals(tableName)) {
-//                //    return true;
-//                // }
-//                if ("worker_node".equalsIgnoreCase(tableName)) {
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false
-//        // paginationInterceptor.setOverflow(false);
-//        // 设置最大单页限制数量，默认 500 条，-1 不受限制
-//        // paginationInterceptor.setLimit(500);
-//        // 开启 count 的 join 优化,只针对部分 left join
-//        sqlParserList.add(tenantSqlParser);
-//        paginationInterceptor.setSqlParserList(sqlParserList);
-//        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
-//        return paginationInterceptor;
-//    }
 
 }
