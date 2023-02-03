@@ -12,8 +12,6 @@ import java.util.Properties;
 
 /**
  * @description: Mybatis动态数据源映射
- * @author: zjh
- * @date: 2022-08-25
  */
 @Configuration
 public class DataSourceConfig {

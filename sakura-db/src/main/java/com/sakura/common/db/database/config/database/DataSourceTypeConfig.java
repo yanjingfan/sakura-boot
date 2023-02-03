@@ -10,8 +10,7 @@ import java.sql.SQLException;
 
 /**
  * @description: 获取数据库类型配置类
- * @author: zjh
- * @date: 2022-08-25
+ * 项目代码注入此类，可以获取到数据库类型，通过判断那种数据库，去编写对应的sql和代码逻辑
  */
 @Configuration
 public class DataSourceTypeConfig {

@@ -19,8 +19,6 @@ import java.util.List;
 
 /**
  * @description:基于Jsqlparser的sql解析功能，并获取表名和where后面的条件
- * @author: zjh
- * @date: 2022-08-12
  */
 @Slf4j
 public class KingbaseJsqlParserUtil {
