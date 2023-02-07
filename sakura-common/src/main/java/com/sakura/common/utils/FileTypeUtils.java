@@ -53,6 +53,7 @@ public class FileTypeUtils {
                 return VIDEO_TYPE;
             }
             if (type.equalsIgnoreCase("doc") || type.equalsIgnoreCase("docx")
+                    || type.equalsIgnoreCase("pdf")
                     || type.equalsIgnoreCase("ppt") || type.equalsIgnoreCase("pptx")
                     || type.equalsIgnoreCase("xls") || type.equalsIgnoreCase("xlsx")
                     || type.equalsIgnoreCase("zip")||type.equalsIgnoreCase("jar")) {
