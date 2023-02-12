@@ -73,6 +73,7 @@
         <p6spy.version>3.8.5</p6spy.version>
         <powerjob.version>4.0.1</powerjob.version>
         <nimbus.version>8.16</nimbus.version>
+        <jasypt.version>2.1.2</jasypt.version>
         <sa-token.version>1.30.0</sa-token.version>
         <bootstrap.version>3.1.2</bootstrap.version>
         <servlet.version>4.0.1</servlet.version>
@@ -419,6 +420,13 @@
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
                 <version>${nimbus.version}</version>
+            </dependency>
+
+            <!--jasypt配置文件加解密-->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>2.1.2</version>
             </dependency>
 
         </dependencies>
