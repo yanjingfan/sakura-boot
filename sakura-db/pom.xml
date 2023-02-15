@@ -71,12 +71,12 @@
         </dependency>
         <!-- sql打印 end -->
 
-        <!-- 达梦8驱动 -->
-        <dependency>
-            <groupId>com.dameng</groupId>
-            <artifactId>DmJdbcDriver18</artifactId>
-            <version>8.1.2.79</version>
-        </dependency>
+        <!-- 达梦8驱动，添加此驱动，jpa配置文件需要配置方言以及对应版本的依赖 -->
+<!--        <dependency>-->
+<!--            <groupId>com.dameng</groupId>-->
+<!--            <artifactId>DmJdbcDriver18</artifactId>-->
+<!--            <version>8.1.2.79</version>-->
+<!--        </dependency>-->
         <!-- 达梦8驱动 end -->
     </dependencies>
 
