@@ -70,6 +70,14 @@
             <artifactId>p6spy</artifactId>
         </dependency>
         <!-- sql打印 end -->
+
+        <!-- 达梦8驱动 -->
+        <dependency>
+            <groupId>com.dameng</groupId>
+            <artifactId>DmJdbcDriver18</artifactId>
+            <version>8.1.2.79</version>
+        </dependency>
+        <!-- 达梦8驱动 end -->
     </dependencies>
 
     <build>
