@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.sakura.common.db.condition.ConditionOnMissingTenantProperty;
 import com.sakura.common.db.database.enums.DatabaseTypeEnum;
+import com.sakura.common.db.database.plugin.dm.DMMybatisplusPlugin;
 import com.sakura.common.db.database.plugin.kingbase.KingbaseMybatisplusPlugin;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class MybatisPlusConfig {
             case DM_DBMS: {
                 interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.DM));
                 // TODO 添加适配达梦数据库转换拦截器
-//            interceptor.addInnerInterceptor(new DmMybatisplusPlugin());
+                interceptor.addInnerInterceptor(new DMMybatisplusPlugin());
                 break;
             }
             default: {
@@ -80,6 +81,7 @@ public class MybatisPlusConfig {
 
     /**
      * 多租户分页
+     *
      * @return
      */
     @ConditionalOnProperty(prefix = "tenant", name = "column")
