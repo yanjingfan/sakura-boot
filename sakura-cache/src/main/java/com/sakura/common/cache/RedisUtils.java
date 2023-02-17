@@ -1,10 +1,14 @@
 package com.sakura.common.cache;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,11 +20,43 @@ import java.util.concurrent.TimeUnit;
  * @description redis操作实现类
  * @modified By
  */
+@Slf4j
 @Service
 public class RedisUtils {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
+    public void batchDel(String pattern) {
+        Set<String> scanSet = scan(pattern);
+        del(scanSet);
+    }
+
+    /**
+     * scan 实现
+     *
+     * @param pattern 表达式，如：abc*，找出所有以abc开始的键
+     */
+    public Set<String> scan(String pattern) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(pattern);
+        sb.append("*");
+        return redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
+            Set<String> keysTmp = new HashSet<>();
+            try (Cursor<byte[]> cursor = connection.scan(new ScanOptions.ScanOptionsBuilder()
+                    .match(sb.toString())
+                    .count(1000).build())) {
+
+                while (cursor.hasNext()) {
+                    keysTmp.add(new String(cursor.next(), "Utf-8"));
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw new RuntimeException(e);
+            }
+            return keysTmp;
+        });
+    }
 
     public void set(String key, Object value, long time) {
         redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -41,6 +77,9 @@ public class RedisUtils {
         return redisTemplate.delete(key);
     }
 
+    public Long del(Set<String> keys) {
+        return redisTemplate.delete(keys);
+    }
     
     public Long del(List<String> keys) {
         return redisTemplate.delete(keys);
@@ -133,7 +172,7 @@ public class RedisUtils {
         return redisTemplate.opsForSet().add(key, values);
     }
 
-    
+
     public Long sAdd(String key, long time, Object... values) {
         Long count = redisTemplate.opsForSet().add(key, values);
         expire(key, time);
