@@ -74,16 +74,31 @@ public class KingbaseMybatisplusPlugin extends JsqlParserSupport implements Inne
     protected void processSelect(Select select, int index, String sql, Object obj) {
         SelectBody selectBody = select.getSelectBody();
         if (selectBody instanceof PlainSelect) {
-            PlainSelect plainSelect = (PlainSelect) selectBody;
-            FromItem fromItem = plainSelect.getFromItem();
-            if (fromItem instanceof Table) {
-                // 表名前加模式
-                ((Table) fromItem).setSchemaName(PUBLIC_SCHEMA);
-                plainSelect.setFromItem(fromItem);
-            }
-
-            reformatPlainSelect(plainSelect);
+            handleSelect(selectBody);
         }
+    }
+
+    private void handleSelect(SelectBody selectBody) {
+        PlainSelect plainSelect = (PlainSelect) selectBody;
+        List<Join> joins = plainSelect.getJoins();
+        if (!CollectionUtils.isEmpty(joins)) {
+            joins.stream().forEach(join -> {
+                FromItem rightItem = join.getRightItem();
+                if (rightItem instanceof Table) {
+                    // 表名前加模式
+                    ((Table) rightItem).setSchemaName(PUBLIC_SCHEMA);
+                    join.setRightItem(rightItem);
+                }
+            });
+        }
+        FromItem fromItem = plainSelect.getFromItem();
+        if (fromItem instanceof Table) {
+            // 表名前加模式
+            ((Table) fromItem).setSchemaName(PUBLIC_SCHEMA);
+            plainSelect.setFromItem(fromItem);
+        }
+
+        reformatPlainSelect(plainSelect);
     }
 
     /**
@@ -141,16 +156,27 @@ public class KingbaseMybatisplusPlugin extends JsqlParserSupport implements Inne
 
         SelectExpressionItem item = (SelectExpressionItem) selectItem;
 
+        //处理子查询
+        Expression expression = item.getExpression();
+        if (expression instanceof SubSelect) {
+            SubSelect subSelect = (SubSelect) expression;
+            SelectBody selectBody = subSelect.getSelectBody();
+            handleSelect(selectBody);
+        }
+
         // 如果是列
-        if (item.getExpression() instanceof Column) {
-            Column columnExp = (Column) item.getExpression();
+        if (expression instanceof Column) {
+            Column columnExp = (Column) expression;
             return new SelectExpressionItem(reFormatSelectColumn(columnExp, item.getAlias()));
         }
 
         //如果是函数
-        if (item.getExpression() instanceof Function) {
-            Function function = (Function) item.getExpression();
-            return new SelectExpressionItem(reFormatFunction(function));
+        if (expression instanceof Function) {
+            Function function = reFormatFunction((Function) expression);
+            item.setExpression(function);
+            if (item.getAlias() != null) {
+                item.getAlias().setName(KingbaseJsqlParserUtil.getNewColumnName(item.getAlias().getName()));
+            }
         }
 
         return item;
@@ -163,17 +189,18 @@ public class KingbaseMybatisplusPlugin extends JsqlParserSupport implements Inne
      * @return 格式化的查询语句
      */
     public void reformatPlainSelect(PlainSelect plainSelect) {
-        if (plainSelect.getFromItem() instanceof Table) {
-            if (org.springframework.util.StringUtils.isEmpty(((Table) plainSelect.getFromItem()).getSchemaName())) {
-                // 表名前加模式
-                ((Table) plainSelect.getFromItem()).setSchemaName(PUBLIC_SCHEMA);
-            }
-        }
+//        if (plainSelect.getFromItem() instanceof Table) {
+//            if (org.springframework.util.StringUtils.isEmpty(((Table) plainSelect.getFromItem()).getSchemaName())) {
+//                // 表名前加模式
+//                ((Table) plainSelect.getFromItem()).setSchemaName(PUBLIC_SCHEMA);
+//            }
+//        }
 
         //处理要查询的字段
         List<SelectItem> selectItems = plainSelect.getSelectItems();
         plainSelect.setSelectItems(disposeSelectColumn(selectItems));
 
+        KingbaseJsqlParserUtil.parserGroupByExpression(plainSelect.getGroupBy());
         // 处理 where 条件
         KingbaseJsqlParserUtil.translateParser(plainSelect.getWhere());
     }
@@ -250,10 +277,8 @@ public class KingbaseMybatisplusPlugin extends JsqlParserSupport implements Inne
                         translateFormat((StringValue) exp);
                     }
                 } else if ("CURDATE".equalsIgnoreCase(functionName)) {
-                    // 测试
                     function.setName("to_char(now(), 'YYYY-MM-DD')");
                 } else if ("CURTIME".equalsIgnoreCase(functionName)) {
-                    // 测试
                     function.setName("to_char(now(), 'HH24:MI:SS')");
                 }
             }

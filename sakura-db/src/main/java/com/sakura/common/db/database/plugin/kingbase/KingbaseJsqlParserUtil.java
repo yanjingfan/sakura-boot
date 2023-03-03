@@ -11,6 +11,7 @@ import net.sf.jsqlparser.expression.operators.relational.IsNullExpression;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.select.GroupByElement;
 import net.sf.jsqlparser.util.TablesNamesFinder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
@@ -141,6 +142,18 @@ public class KingbaseJsqlParserUtil {
         Expression leftExpression = ((BinaryExpression) expression).getLeftExpression();
         if (leftExpression instanceof Column) {
             ((Column) leftExpression).setColumnName(getNewColumnName(((Column) leftExpression).getColumnName()));
+        }
+    }
+
+    //处理group by
+    public static void parserGroupByExpression(GroupByElement groupBy) {
+        if (groupBy != null) {
+            List<Expression> groupByExpressions = groupBy.getGroupByExpressions();
+            groupByExpressions.stream().forEach(expression -> {
+                if (expression instanceof Column) {
+                    ((Column) expression).setColumnName(getNewColumnName(((Column) expression).getColumnName()));
+                }
+            });
         }
     }
 
