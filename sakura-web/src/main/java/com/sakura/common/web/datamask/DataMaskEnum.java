@@ -16,7 +16,7 @@ public enum DataMaskEnum {
     /**
      * 邮箱脱敏
      */
-    EMAIL(s -> s.replaceAll("(\\S{3})\\S{2}(\\S*)\\S{2}", "$1****$2"))
+    EMAIL(s -> s.replaceAll("(\\S{3})\\S{2}(\\S*)", "$1****$2"))
     ,
     /**
      * 住址脱敏
