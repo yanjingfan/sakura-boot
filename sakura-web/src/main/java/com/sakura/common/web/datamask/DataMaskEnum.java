@@ -22,6 +22,11 @@ public enum DataMaskEnum {
      * 住址脱敏
      */
     ADDRESS(s -> s.replaceAll("(\\S{3})\\S{2}(\\S*)\\S{2}", "$1****$2****"))
+    ,
+    /**
+     * 名称脱敏
+     */
+    IDCARD(s -> s.replaceAll("(\\w{6})\\w*(\\w{3})", "$1*********$2"))
     ;
 
     /**
