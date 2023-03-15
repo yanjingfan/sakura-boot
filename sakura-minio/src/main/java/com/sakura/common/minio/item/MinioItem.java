@@ -16,20 +16,24 @@ import java.util.Date;
 @ToString
 public class MinioItem {
 
-    /**对象名称**/
-//    @ApiModelProperty("对象名称")
+    /**
+     * 对象名称
+     */
     private String objectName;
-    /**最后操作时间**/
-//    @ApiModelProperty("最后操作时间")
+    /**
+     * 最后操作时间
+     */
     private Date lastModified;
     private String etag;
-    /**对象大小**/
-//    @ApiModelProperty("对象大小")
+    /**
+     * 对象大小
+     */
     private String size;
     private String storageClass;
     private Owner owner;
-    /**对象类型：directory（目录）或file（文件）**/
-//    @ApiModelProperty("对象类型：directory（目录）或file（文件）")
+    /**
+     * 对象类型：directory（目录）或file（文件）
+     */
     private String type;
 
     public MinioItem(String objectName, Date lastModified, String etag, String size, String storageClass, Owner owner, String type) {

@@ -14,21 +14,33 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("minio")
 public class FilesConfig {
 
-    /**minio的路径**/
+    /**
+     * minio的路径
+     */
     private String endpoint;
 
-    /**minio的accessKey**/
+    /**
+     * minio的accessKey
+     */
     private String accessKey;
 
-    /**minio的secretKey**/
+    /**
+     * minio的secretKey
+     */
     private String secretKey;
 
-    /**下载地址**/
+    /**
+     * 下载地址
+     */
     private String httpUrl;
 
-    /**图片大小限制**/
+    /**
+     * 图片大小限制
+     */
     private Long imgSize;
 
-    /**文件大小限制**/
+    /**
+     * 文件大小限制
+     */
     private Long fileSize;
 }
