@@ -55,7 +55,7 @@ public class RedisRateLimiterAspect {
             // TODO: 此时需要考虑局域网多用户访问的情况，因此 key 后续需要加上方法参数更加合理
             key = key + SEPARATOR + IpUtil.getIpAddr();
 
-            long max = rateLimiter.max();
+            int max = rateLimiter.max();
             long timeout = rateLimiter.timeout();
             TimeUnit timeUnit = rateLimiter.timeUnit();
             boolean limited = shouldLimited(key, max, timeout, timeUnit);
@@ -67,7 +67,7 @@ public class RedisRateLimiterAspect {
         return point.proceed();
     }
 
-    private boolean shouldLimited(String key, long max, long timeout, TimeUnit timeUnit) {
+    private boolean shouldLimited(String key, int max, long timeout, TimeUnit timeUnit) {
         // 最终的 key 格式为：
         // limit:自定义key:IP
         // limit:类名.方法名:IP
