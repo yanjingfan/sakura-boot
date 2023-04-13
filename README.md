@@ -23,6 +23,13 @@
 | sakura-web           | web相关，sql盲注处理，MybatisPlus配置，动态修改日志等级接口，swagger+knife4j配置                 |
 | sakura-web-socket    | webSocket组件                                                              |
 
+## 开发计划
+
+| 功能                   | 进度          |
+| -------------------- | ----------- |
+| 升级至springboot3 | 待开发         |
+| Netty模块 | 开发中         |
+
 ## 脚手架使用demo
 
 ### [sakura-boot-demo](https://github.com/yanjingfan/sakura-boot-demo)
