@@ -28,34 +28,34 @@ import java.util.stream.Collectors;
  * Swagger2API文档的配置
  */
 @EnableSwagger2WebMvc
-@EnableKnife4j
+//@EnableKnife4j
 @Configuration
 public class Swagger2Config {
 
 
-    @Bean
-    public Docket createRestApi(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                //为当前包下controller生成API文档
-                .apis(RequestHandlerSelectors.basePackage("com.sakura.cloud"))
-                //为有@Api注解的Controller生成API文档
-//                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                //为有@ApiOperation注解的方法生成API文档
-//                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .paths(PathSelectors.any())
-                .build();
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("在线文档")
-                .description("sakura-demo")
-                .contact(new Contact("yangfan", null, ""))
-                .version("1.0")
-                .build();
-    }
+//    @Bean
+//    public Docket createRestApi(){
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .apiInfo(apiInfo())
+//                .select()
+//                //为当前包下controller生成API文档
+//                .apis(RequestHandlerSelectors.basePackage("com.sakura.cloud"))
+//                //为有@Api注解的Controller生成API文档
+////                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
+//                //为有@ApiOperation注解的方法生成API文档
+////                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+//                .paths(PathSelectors.any())
+//                .build();
+//    }
+//
+//    private ApiInfo apiInfo() {
+//        return new ApiInfoBuilder()
+//                .title("在线文档")
+//                .description("sakura-demo")
+//                .contact(new Contact("yangfan", null, ""))
+//                .version("1.0")
+//                .build();
+//    }
 
     @Bean
     public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
