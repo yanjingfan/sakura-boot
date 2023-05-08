@@ -43,7 +43,7 @@ public class RedisUtils {
         sb.append("*");
         return redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
             Set<String> keysTmp = new HashSet<>();
-            try (Cursor<byte[]> cursor = connection.scan(new ScanOptions.ScanOptionsBuilder()
+            try (Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions()
                     .match(sb.toString())
                     .count(1000).build())) {
 
