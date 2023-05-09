@@ -55,7 +55,7 @@
         <easyexcel.version>3.0.5</easyexcel.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <velocity.version>2.0</velocity.version>
-        <knife4j.version>2.0.9</knife4j.version>
+        <knife4j.version>4.1.0</knife4j.version>
         <mysql.version>8.0.16</mysql.version>
         <jsoup.version>1.14.2</jsoup.version>
         <hutool.version>5.8.5</hutool.version>
@@ -269,60 +269,17 @@
                 <version>${velocity.version}</version>
             </dependency>
 
-<!--            &lt;!&ndash; Swagger3开始 &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.plugin</groupId>-->
-<!--                <artifactId>spring-plugin-core</artifactId>-->
-<!--                <version>${spring-plugin-core.version}</version>-->
-<!--            </dependency>-->
-
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.plugin</groupId>-->
-<!--                <artifactId>spring-plugin-metadata</artifactId>-->
-<!--                <version>${spring-plugin-metadata.version}</version>-->
-<!--            </dependency>-->
-
-<!--            <dependency>-->
-<!--                <groupId>io.swagger</groupId>-->
-<!--                <artifactId>swagger-models</artifactId>-->
-<!--                <version>${swagger-models.version}</version>-->
-<!--            </dependency>-->
-
-<!--            <dependency>-->
-<!--                <groupId>io.springfox</groupId>-->
-<!--                <artifactId>springfox-swagger2</artifactId>-->
-<!--                <version>${swagger.version}</version>-->
-<!--            </dependency>-->
-
-<!--            <dependency>-->
-<!--                <groupId>io.springfox</groupId>-->
-<!--                <artifactId>springfox-swagger-ui</artifactId>-->
-<!--                <version>${swagger.version}</version>-->
-<!--            </dependency>-->
-
             <!--整合Knife4j-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
-                <version>4.1.0</version>
+                <version>${knife4j.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
-                <version>4.1.0</version>
+                <version>${knife4j.version}</version>
             </dependency>
 
             <!-- jsoup -->
