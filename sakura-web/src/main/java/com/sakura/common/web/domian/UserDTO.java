@@ -83,6 +83,6 @@ public class UserDTO {
      * 平台id
      */
     @ApiModelProperty(value = "平台id")
-    private Integer lqbPlatformId;
+    private Long lqbPlatformId;
 
 }
