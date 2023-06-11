@@ -21,9 +21,9 @@ public class TreeUtil {
      * @return 组装后的集合
      */
     public static <T> List<T> getTree(List<T> originalList) throws Exception {
-        String keyName = "id";
-        String parentFieldName = "parentId";
-        String childrenFieldName = "children";
+        String keyName = "lqbId";
+        String parentFieldName = "lqbParentId";
+        String childrenFieldName = "lqbChildren";
         return getTree(originalList, keyName, parentFieldName, childrenFieldName);
     }
 
