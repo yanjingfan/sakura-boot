@@ -40,7 +40,7 @@
 | ------------------------------------------------------------------------------------------------------- | -------------- | --------------------- |
 | [Spring Cloud](https://spring.io/projects/spring-cloud)                                                 | Hoxton.SR12    | 快速构建分布式系统的框架          |
 | [Spring Cloud Alibaba](https://spring.io/projects/spring-cloud-alibaba)                                 | 2.2.8.RELEASE  | 阿里巴巴快速构建分布式系统的框架      |
-| [Spring Security+OAuth2](https://spring.io/projects/spring-authorization-server)                        |                | 安全认证框架（官方已不再维护，有点难受）  |
+| [Spring Security+OAuth2](https://spring.io/projects/spring-authorization-server)                        |                | 安全认证框架  |
 | [Nacos](https://nacos.io/zh-cn/docs/quick-start.html)                                                   | 2.0.3          | 发现、配置和管理微服务           |
 | [Spring Boot](https://spring.io/projects/spring-boot)                                                   | 2.3.12.RELEASE | 容器+MVC框架              |
 | [MybatisPlus](https://baomidou.com/)                                                                    | 3.3.2          | ORM框架                 |
